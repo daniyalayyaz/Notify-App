@@ -3,9 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:marquee/marquee.dart';
-import 'package:notify_app/drawner.dart';
-import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
+
 import 'package:video_player/video_player.dart';
 
 class Home extends StatefulWidget {
@@ -27,24 +25,29 @@ class _HomeState extends State<Home> {
     "https://media.istockphoto.com/photos/digital-security-concept-picture-id1289956604?b=1&k=20&m=1289956604&s=170667a&w=0&h=fpkFDlqRrw_IzsQpZkuYqfgCUw7VMemUT8IuCH4-e9w="
   ];
   late VideoPlayerController _controller;
-  // bool startedPlaying = false;
-  // void initState() {
-  //   super.initState();
+  bool startedPlaying = false;
+  void initState() {
+    super.initState();
 
-  //   _controller = VideoPlayerController.asset('assets/bee.mp4');
-  //   _controller.addListener(() {
-  //     if (startedPlaying && !_controller.value.isPlaying) {
-  //       Navigator.pop(context);
-  //     }
-  //   });
-  // }
+    _controller = VideoPlayerController.asset('assets/bee.mp4');
+    _controller.addListener(() {
+      if (startedPlaying && !_controller.value.isPlaying) {}
+    });
+    _controller.setLooping(true);
+  }
 
-  // Future<bool> started() async {
-  //   await _controller.initialize();
-  //   await _controller.play();
-  //   startedPlaying = true;
-  //   return true;
-  // }
+  Future<bool> started() async {
+    await _controller.initialize();
+    await _controller.play();
+    startedPlaying = true;
+    return true;
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   var prefs;
 
@@ -116,20 +119,23 @@ class _HomeState extends State<Home> {
                       ),
                     ],
                   ),
-                  // FutureBuilder<bool>(
-                  //   future: started(),
-                  //   builder:
-                  //       (BuildContext context, AsyncSnapshot<bool> snapshot) {
-                  //     if (snapshot.data == true) {
-                  //       return AspectRatio(
-                  //         aspectRatio: _controller.value.aspectRatio,
-                  //         child: VideoPlayer(_controller),
-                  //       );
-                  //     } else {
-                  //       return const Text('waiting for video to load');
-                  //     }
-                  //   },
-                  // ),
+                  FutureBuilder<bool>(
+                    future: started(),
+                    builder:
+                        (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                      if (snapshot.data == true) {
+                        return Container(
+                          height: 200,
+                          child: AspectRatio(
+                            aspectRatio: _controller.value.aspectRatio,
+                            child: VideoPlayer(_controller),
+                          ),
+                        );
+                      } else {
+                        return const Text('waiting for video to load');
+                      }
+                    },
+                  ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
