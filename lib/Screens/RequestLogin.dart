@@ -1,6 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:notify_app/Screens/LoginPage.dart';
 import 'package:provider/provider.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:notify_app/Models/NewUsers.dart';
 
 class requestLoginPage extends StatefulWidget {
   static final route = '/RequestLogin';
@@ -11,6 +15,61 @@ class requestLoginPage extends StatefulWidget {
 
 class _requestLoginPageState extends State<requestLoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey();
+  bool isEmail(String em) {
+    String p =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+
+    RegExp regExp = new RegExp(p);
+
+    return regExp.hasMatch(em);
+  }
+
+  bool isPhone(String em) {
+    String p =
+        r'^((\+92)|(0092))-{0,1}\d{3}-{0,1}\d{7}$|^\d{11}$|^\d{4}-\d{7}$';
+
+    RegExp regExp = new RegExp(p);
+
+    return regExp.hasMatch(em);
+  }
+
+  var RegisterationModel = RequestUsers(
+      name: '',
+      email: '',
+      phoneNo: '',
+      designation: '',
+      age: '',
+      owner: '',
+      address: '',
+      fname: '',
+      fphoneNo: '',
+      uid: '');
+  var initials = {
+    'name': '',
+    'email': '',
+    'phoneNo': '',
+    'designation': '',
+    'age': '',
+    'owner': '',
+    'address': '',
+    'fname': '',
+    'fphoneNo': '',
+    'uid': ''
+  };
+  void saveform() {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Details Sent!'),
+          action: SnackBarAction(label: 'OK', onPressed: _formKey.reset()),
+          backgroundColor: Colors.teal,
+        ),
+      );
+    }
+    FocusScope.of(context).unfocus();
+    inspect(RegisterationModel);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +93,7 @@ class _requestLoginPageState extends State<requestLoginPage> {
                           child: Container(
                             padding: EdgeInsets.only(left: 20, top: 40),
                             child: Text(
-                              "Request Crendentials,",
+                              "Request Credentials,",
                               style: TextStyle(
                                   fontSize: (MediaQuery.of(context).size.width -
                                           MediaQuery.of(context).padding.top) *
@@ -91,6 +150,7 @@ class _requestLoginPageState extends State<requestLoginPage> {
                               ),
                               Expanded(
                                 child: TextFormField(
+                                  initialValue: initials['name'] as String,
                                   decoration: InputDecoration(
                                     labelText: 'Enter Your Full Name',
                                     border: InputBorder.none,
@@ -103,7 +163,9 @@ class _requestLoginPageState extends State<requestLoginPage> {
                                       return 'This field is required and cannot be left empty!';
                                     }
                                   },
-                                  onSaved: (value) {},
+                                  onSaved: (value) {
+                                    RegisterationModel.name = value!;
+                                  },
                                   keyboardType: TextInputType.text,
                                 ),
                               )
@@ -139,6 +201,7 @@ class _requestLoginPageState extends State<requestLoginPage> {
                               ),
                               new Expanded(
                                 child: TextFormField(
+                                  initialValue: initials['email'] as String,
                                   keyboardType: TextInputType.emailAddress,
                                   decoration: InputDecoration(
                                     labelText: 'Enter Your Email',
@@ -148,12 +211,16 @@ class _requestLoginPageState extends State<requestLoginPage> {
                                         color: Colors.grey, fontSize: 10),
                                   ),
                                   validator: (value) {
-                                    if (value!.isEmpty ||
-                                        !value.contains('@')) {
+                                    if (value!.isEmpty) {
                                       return 'Invalid email!';
+                                    } else if (!isEmail(value)) {
+                                      return 'Please enter valid Email.';
                                     }
+                                    return null;
                                   },
-                                  onSaved: (value) {},
+                                  onSaved: (value) {
+                                    RegisterationModel.email = value!;
+                                  },
                                 ),
                               )
                             ],
@@ -188,6 +255,7 @@ class _requestLoginPageState extends State<requestLoginPage> {
                               ),
                               Expanded(
                                 child: TextFormField(
+                                  initialValue: initials['phoneNo'] as String,
                                   keyboardType: TextInputType.phone,
                                   decoration: InputDecoration(
                                     labelText: 'Enter Your Phone Number',
@@ -197,11 +265,16 @@ class _requestLoginPageState extends State<requestLoginPage> {
                                         color: Colors.grey, fontSize: 10),
                                   ),
                                   validator: (value) {
-                                    if (value!.isEmpty || value.length < 11) {
+                                    if (value!.isEmpty) {
                                       return 'Phone Number is not valid!';
+                                    } else if (!isPhone(value)) {
+                                      return 'Please enter valid Phone.';
                                     }
+                                    return null;
                                   },
-                                  onSaved: (value) {},
+                                  onSaved: (value) {
+                                    RegisterationModel.phoneNo = value!;
+                                  },
                                 ),
                               )
                             ],
@@ -236,6 +309,8 @@ class _requestLoginPageState extends State<requestLoginPage> {
                               ),
                               Expanded(
                                 child: TextFormField(
+                                  initialValue:
+                                      initials['designation'] as String,
                                   keyboardType: TextInputType.text,
                                   decoration: InputDecoration(
                                     labelText: 'Enter Job Designation',
@@ -249,8 +324,9 @@ class _requestLoginPageState extends State<requestLoginPage> {
                                       return 'This field cannot be left empty!';
                                     }
                                   },
-                                  onSaved: (value) {},
-                                  obscureText: true,
+                                  onSaved: (value) {
+                                    RegisterationModel.designation = value!;
+                                  },
                                 ),
                               )
                             ],
@@ -285,6 +361,7 @@ class _requestLoginPageState extends State<requestLoginPage> {
                               ),
                               Expanded(
                                 child: TextFormField(
+                                  initialValue: initials['age'] as String,
                                   keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
                                     labelText: 'Enter Your Age',
@@ -298,8 +375,9 @@ class _requestLoginPageState extends State<requestLoginPage> {
                                       return 'This field cannot be left empty!';
                                     }
                                   },
-                                  onSaved: (value) {},
-                                  obscureText: true,
+                                  onSaved: (value) {
+                                    RegisterationModel.age = value!;
+                                  },
                                 ),
                               )
                             ],
@@ -334,6 +412,7 @@ class _requestLoginPageState extends State<requestLoginPage> {
                               ),
                               Expanded(
                                 child: TextFormField(
+                                  initialValue: initials['owner'] as String,
                                   keyboardType: TextInputType.name,
                                   decoration: InputDecoration(
                                     labelText:
@@ -348,8 +427,9 @@ class _requestLoginPageState extends State<requestLoginPage> {
                                       return 'This field cannot be left empty!';
                                     }
                                   },
-                                  onSaved: (value) {},
-                                  obscureText: true,
+                                  onSaved: (value) {
+                                    RegisterationModel.owner = value!;
+                                  },
                                 ),
                               )
                             ],
@@ -384,6 +464,7 @@ class _requestLoginPageState extends State<requestLoginPage> {
                               ),
                               Expanded(
                                 child: TextFormField(
+                                  initialValue: initials['address'] as String,
                                   keyboardType: TextInputType.streetAddress,
                                   decoration: InputDecoration(
                                     labelText: 'Enter Your Address',
@@ -398,8 +479,9 @@ class _requestLoginPageState extends State<requestLoginPage> {
                                       return 'This field cannot be left empty!';
                                     }
                                   },
-                                  onSaved: (value) {},
-                                  obscureText: true,
+                                  onSaved: (value) {
+                                    RegisterationModel.address = value!;
+                                  },
                                 ),
                               )
                             ],
@@ -434,6 +516,7 @@ class _requestLoginPageState extends State<requestLoginPage> {
                               ),
                               Expanded(
                                 child: TextFormField(
+                                  initialValue: initials['fname'] as String,
                                   keyboardType: TextInputType.name,
                                   decoration: InputDecoration(
                                     labelText: 'Other Family Member Name',
@@ -447,8 +530,9 @@ class _requestLoginPageState extends State<requestLoginPage> {
                                       return 'This field cannot be left empty!';
                                     }
                                   },
-                                  onSaved: (value) {},
-                                  obscureText: true,
+                                  onSaved: (value) {
+                                    RegisterationModel.fname = value!;
+                                  },
                                 ),
                               )
                             ],
@@ -483,6 +567,7 @@ class _requestLoginPageState extends State<requestLoginPage> {
                               ),
                               Expanded(
                                 child: TextFormField(
+                                  initialValue: initials['fphoneNo'] as String,
                                   keyboardType: TextInputType.phone,
                                   decoration: InputDecoration(
                                     labelText: 'Family Member Phone Number',
@@ -496,8 +581,9 @@ class _requestLoginPageState extends State<requestLoginPage> {
                                       return 'This field cannot be left empty!';
                                     }
                                   },
-                                  onSaved: (value) {},
-                                  obscureText: true,
+                                  onSaved: (value) {
+                                    RegisterationModel.fphoneNo = value!;
+                                  },
                                 ),
                               )
                             ],
@@ -545,9 +631,9 @@ class _requestLoginPageState extends State<requestLoginPage> {
                                     style:
                                         TextStyle(color: Colors.teal.shade800),
                                   ),
-                                  onPressed: () => {},
+                                  onPressed: saveform,
                                 ),
-                              ),
+                              )
                             ],
                           ),
                         ),
@@ -570,8 +656,13 @@ class _requestLoginPageState extends State<requestLoginPage> {
                                       color: Color(0xff8d43d6)),
                                 ),
                                 onPressed: () {
-                                  Navigator.of(context)
-                                      .pushNamed(LoginScreen.routename);
+                                  Navigator.push(
+                                      context,
+                                      PageTransition(
+                                          duration: Duration(milliseconds: 700),
+                                          type: PageTransitionType
+                                              .leftToRightWithFade,
+                                          child: LoginScreen()));
                                 },
                                 child: const Text(
                                   'Sign in',

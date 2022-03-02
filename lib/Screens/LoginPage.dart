@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:notify_app/Screens/Dashboard.dart';
 import 'package:notify_app/Screens/RequestLogin.dart';
 import 'package:provider/provider.dart';
+import 'package:page_transition/page_transition.dart';
 
 class LoginScreen extends StatefulWidget {
   static final routename = 'login';
@@ -221,8 +222,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   color: Colors.teal[800],
                                                 ),
                                                 onPressed: () => {
-                                                  Navigator.of(context)
-                                                      .pushNamed(Home.routeName)
+                                                  Navigator.push(
+                                                      context,
+                                                      PageTransition(
+                                                          duration: Duration(
+                                                              milliseconds:
+                                                                  700),
+                                                          type:
+                                                              PageTransitionType
+                                                                  .fade,
+                                                          child: Home()))
+                                                  // Navigator.of(context)
+                                                  //     .pushNamed(Home.routeName)
                                                 },
                                               ),
                                             ),
@@ -257,8 +268,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                               const TextStyle(fontSize: 10),
                                         ),
                                         onPressed: () {
-                                          Navigator.of(context).pushNamed(
-                                              requestLoginPage.route);
+                                          Navigator.push(
+                                              context,
+                                              PageTransition(
+                                                  duration: Duration(
+                                                      milliseconds: 700),
+                                                  type: PageTransitionType
+                                                      .rightToLeftWithFade,
+                                                  child: requestLoginPage()));
                                         },
                                         child: const Text(
                                           'Request Login Credentials.',

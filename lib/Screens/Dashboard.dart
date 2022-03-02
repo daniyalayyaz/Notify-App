@@ -81,147 +81,158 @@ class _HomeState extends State<Home> {
         body: LayoutBuilder(builder: (ctx, constraints) {
           return Center(
             child: Container(
+                color: Colors.blueGrey[50],
                 child: Padding(
-              padding: const EdgeInsets.all(14.0),
-              child: Column(
-                children: <Widget>[
-                  Row(
-                    children: [
-                      Flexible(
-                        flex: 1,
-                        fit: FlexFit.tight,
-                        child: CarouselSlider(
-                          items: urls
-                              .map((e) => Container(
-                                    margin: EdgeInsets.all(6.0),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      image: DecorationImage(
-                                        image: NetworkImage(e.toString()),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ))
-                              .toList(),
-                          //Slider Container properties
-                          options: CarouselOptions(
-                            height: 180.0,
-                            enlargeCenterPage: true,
-                            autoPlay: true,
-                            aspectRatio: 16 / 9,
-                            autoPlayCurve: Curves.fastOutSlowIn,
-                            enableInfiniteScroll: true,
-                            autoPlayAnimationDuration:
-                                Duration(milliseconds: 800),
-                            viewportFraction: 0.8,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  FutureBuilder<bool>(
-                    future: started(),
-                    builder:
-                        (BuildContext context, AsyncSnapshot<bool> snapshot) {
-                      if (snapshot.data == true) {
-                        return Container(
-                          height: 200,
-                          child: AspectRatio(
-                            aspectRatio: _controller.value.aspectRatio,
-                            child: VideoPlayer(_controller),
-                          ),
-                        );
-                      } else {
-                        return const Text('waiting for video to load');
-                      }
-                    },
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
+                  padding: const EdgeInsets.all(14.0),
+                  child: Column(
+                    children: <Widget>[
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: SizedBox(
-                              height: 50,
-                              width: MediaQuery.of(context).size.width / 3,
-                              child: ElevatedButton(
-                                style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        Colors.greenAccent)),
-                                onPressed: () => null,
-                                child: Text('Office',
-                                    style: TextStyle(
-                                        color: Colors.teal[900],
-                                        fontWeight: FontWeight.bold)),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: SizedBox(
-                              height: 50,
-                              width: MediaQuery.of(context).size.width / 3,
-                              child: ElevatedButton(
-                                style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        Colors.greenAccent)),
-                                onPressed: () => null,
-                                child: Text('Emergency',
-                                    style: TextStyle(
-                                        color: Colors.teal[900],
-                                        fontWeight: FontWeight.bold)),
+                          Flexible(
+                            flex: 1,
+                            fit: FlexFit.tight,
+                            child: CarouselSlider(
+                              items: urls
+                                  .map((e) => Container(
+                                        margin: EdgeInsets.all(6.0),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                          image: DecorationImage(
+                                            image: NetworkImage(e.toString()),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ))
+                                  .toList(),
+                              //Slider Container properties
+                              options: CarouselOptions(
+                                height: 180.0,
+                                enlargeCenterPage: true,
+                                autoPlay: true,
+                                aspectRatio: 16 / 9,
+                                autoPlayCurve: Curves.fastOutSlowIn,
+                                enableInfiniteScroll: true,
+                                autoPlayAnimationDuration:
+                                    Duration(milliseconds: 800),
+                                viewportFraction: 0.8,
                               ),
                             ),
                           ),
                         ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: SizedBox(
-                          height: 50,
-                          width: MediaQuery.of(context).size.width / 1.42,
-                          child: ElevatedButton(
-                            style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(
-                                    Colors.greenAccent)),
-                            onPressed: () => null,
-                            child: Text(
-                              'Ambulance',
-                              style: TextStyle(
-                                  color: Colors.teal[900],
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
+                      Flexible(
+                        flex: 2,
+                        fit: FlexFit.loose,
+                        child: FutureBuilder<bool>(
+                          future: started(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<bool> snapshot) {
+                            if (snapshot.data == true) {
+                              return Container(
+                                height: 200,
+                                child: AspectRatio(
+                                  aspectRatio: _controller.value.aspectRatio,
+                                  child: VideoPlayer(_controller),
+                                ),
+                              );
+                            } else {
+                              return const Text(
+                                'Waiting for Video to load...',
+                                style: TextStyle(color: Colors.teal),
+                              );
+                            }
+                          },
                         ),
                       ),
-                    ],
-                  ),
-                  Container(
-                    color: Colors.teal[100],
-                    height: 30,
-                    child: Marquee(
-                      text: 'Security notify App',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                      scrollAxis: Axis.horizontal,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      blankSpace: 20.0,
-                      velocity: 100.0,
-                      pauseAfterRound: Duration(seconds: 1),
-                      startPadding: 10.0,
-                      accelerationDuration: Duration(seconds: 1),
-                      accelerationCurve: Curves.linear,
-                      decelerationDuration: Duration(milliseconds: 500),
-                      decelerationCurve: Curves.easeOut,
-                    ),
-                  ),
-                ], //<Widget>[]
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-              ), //Column
-            )
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: SizedBox(
+                                  height: 50,
+                                  width: MediaQuery.of(context).size.width / 3,
+                                  child: ElevatedButton(
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                Colors.greenAccent)),
+                                    onPressed: () => null,
+                                    child: Text('Office',
+                                        style: TextStyle(
+                                            color: Colors.teal[900],
+                                            fontWeight: FontWeight.bold)),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: SizedBox(
+                                  height: 50,
+                                  width: MediaQuery.of(context).size.width / 3,
+                                  child: ElevatedButton(
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                Colors.greenAccent)),
+                                    onPressed: () => null,
+                                    child: Text('Emergency',
+                                        style: TextStyle(
+                                            color: Colors.teal[900],
+                                            fontWeight: FontWeight.bold)),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SizedBox(
+                              height: 50,
+                              width: MediaQuery.of(context).size.width / 1.42,
+                              child: ElevatedButton(
+                                style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                        Colors.greenAccent)),
+                                onPressed: () => null,
+                                child: Text(
+                                  'Ambulance',
+                                  style: TextStyle(
+                                      color: Colors.teal[900],
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Container(
+                        color: Colors.teal[100],
+                        height: 30,
+                        child: Marquee(
+                          text: 'Security Notify App',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                          scrollAxis: Axis.horizontal,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          blankSpace: 20.0,
+                          velocity: 100.0,
+                          pauseAfterRound: Duration(milliseconds: 100),
+                          startPadding: 10.0,
+                          accelerationDuration: Duration(seconds: 1),
+                          accelerationCurve: Curves.linear,
+                          decelerationDuration: Duration(milliseconds: 500),
+                          decelerationCurve: Curves.easeOut,
+                        ),
+                      ),
+                    ], //<Widget>[]
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                  ), //Column
+                )
                 //Padding
                 ), //Container
           );

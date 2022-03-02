@@ -1,14 +1,14 @@
 class RequestUsers {
-  final String name;
-  final String email;
-  final String phoneNo;
-  final String designation;
-  final String age;
-  final String owner;
-  final String address;
-  final String fname;
-  final String fphoneNo;
-  final String uid;
+  String name;
+  String email;
+  String phoneNo;
+  String designation;
+  String age;
+  String owner;
+  String address;
+  String fname;
+  String fphoneNo;
+  String uid;
 
   RequestUsers({
     required this.name,
