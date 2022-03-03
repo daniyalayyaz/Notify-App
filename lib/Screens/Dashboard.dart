@@ -17,6 +17,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  List<String> buttonLabels = ['Office', 'Emergency', 'Ambulance'];
   List<String> urls = [
     "https://www.xavor.com/wp-content/uploads/mobile-app-security-checklist.jpg",
     "https://m.media-amazon.com/images/I/51siyARmfOL._AC_SL1100_.jpg",
@@ -162,7 +163,7 @@ class _HomeState extends State<Home> {
                                             MaterialStateProperty.all(
                                                 Colors.greenAccent)),
                                     onPressed: () => null,
-                                    child: Text('Office',
+                                    child: Text(buttonLabels[0],
                                         style: TextStyle(
                                             color: Colors.teal[900],
                                             fontWeight: FontWeight.bold)),
@@ -180,7 +181,7 @@ class _HomeState extends State<Home> {
                                             MaterialStateProperty.all(
                                                 Colors.greenAccent)),
                                     onPressed: () => null,
-                                    child: Text('Emergency',
+                                    child: Text(buttonLabels[1],
                                         style: TextStyle(
                                             color: Colors.teal[900],
                                             fontWeight: FontWeight.bold)),
@@ -200,7 +201,7 @@ class _HomeState extends State<Home> {
                                         Colors.greenAccent)),
                                 onPressed: () => null,
                                 child: Text(
-                                  'Ambulance',
+                                  buttonLabels[2],
                                   style: TextStyle(
                                       color: Colors.teal[900],
                                       fontWeight: FontWeight.bold),
