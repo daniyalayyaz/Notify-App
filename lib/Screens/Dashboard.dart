@@ -1,10 +1,12 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:marquee/marquee.dart';
 
 import 'package:video_player/video_player.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Home extends StatefulWidget {
   static final routeName = "home";
@@ -17,7 +19,15 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<String> buttonLabels = ['Office', 'Emergency', 'Ambulance'];
+  var buttonLabels;
+  CollectionReference _collectionRef =
+      FirebaseFirestore.instance.collection('utility');
+  Future<void> getData() async {
+    DocumentSnapshot docSnapshot = await _collectionRef.doc('Button').get();
+    buttonLabels = docSnapshot.data();
+    print(buttonLabels);
+  }
+
   List<String> urls = [
     "https://www.xavor.com/wp-content/uploads/mobile-app-security-checklist.jpg",
     "https://m.media-amazon.com/images/I/51siyARmfOL._AC_SL1100_.jpg",
@@ -163,7 +173,7 @@ class _HomeState extends State<Home> {
                                             MaterialStateProperty.all(
                                                 Colors.greenAccent)),
                                     onPressed: () => null,
-                                    child: Text(buttonLabels[0],
+                                    child: Text(buttonLabels.btn1,
                                         style: TextStyle(
                                             color: Colors.teal[900],
                                             fontWeight: FontWeight.bold)),
@@ -181,7 +191,7 @@ class _HomeState extends State<Home> {
                                             MaterialStateProperty.all(
                                                 Colors.greenAccent)),
                                     onPressed: () => null,
-                                    child: Text(buttonLabels[1],
+                                    child: Text(buttonLabels.btn2,
                                         style: TextStyle(
                                             color: Colors.teal[900],
                                             fontWeight: FontWeight.bold)),
@@ -201,7 +211,7 @@ class _HomeState extends State<Home> {
                                         Colors.greenAccent)),
                                 onPressed: () => null,
                                 child: Text(
-                                  buttonLabels[2],
+                                  buttonLabels.btn3,
                                   style: TextStyle(
                                       color: Colors.teal[900],
                                       fontWeight: FontWeight.bold),
