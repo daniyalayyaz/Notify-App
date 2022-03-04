@@ -69,6 +69,7 @@ class _requestLoginPageState extends State<requestLoginPage> {
           "fName": RegisterationModel.fname,
           "destination": RegisterationModel.designation,
           "age": RegisterationModel.age,
+          "owner": RegisterationModel.owner,
           "status": "Pending",
           "email": RegisterationModel.email
         });
