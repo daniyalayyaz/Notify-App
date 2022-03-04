@@ -5,6 +5,7 @@ import 'package:notify_app/Screens/LoginPage.dart';
 import 'package:provider/provider.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:notify_app/Models/NewUsers.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class requestLoginPage extends StatefulWidget {
   static final route = '/RequestLogin';
@@ -56,9 +57,26 @@ class _requestLoginPageState extends State<requestLoginPage> {
     'fphoneNo': '',
     'uid': ''
   };
-  void saveform() {
+  void saveform() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
+      try {
+        await FirebaseFirestore.instance.collection('UserRequest').add({
+          "Name": RegisterationModel.name,
+          "Phoneno": RegisterationModel.phoneNo,
+          "address": RegisterationModel.address,
+          "fPhonenumber": RegisterationModel.fphoneNo,
+          "fName": RegisterationModel.fname,
+          "destination": RegisterationModel.designation,
+          "age": RegisterationModel.age,
+          "status": "Pending",
+          "email": RegisterationModel.email
+        });
+        _formKey.currentState!.reset();
+        FocusScope.of(context).unfocus();
+      } catch (e) {
+        print(e);
+      }
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Details Sent!'),
@@ -67,8 +85,6 @@ class _requestLoginPageState extends State<requestLoginPage> {
         ),
       );
     }
-    FocusScope.of(context).unfocus();
-    inspect(RegisterationModel);
   }
 
   @override
