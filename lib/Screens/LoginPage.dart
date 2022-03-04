@@ -1,8 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:notify_app/Screens/Dashboard.dart';
 import 'package:notify_app/Screens/RequestLogin.dart';
 import 'package:provider/provider.dart';
 import 'package:page_transition/page_transition.dart';
+import 'dart:convert';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   static final routename = 'login';
@@ -12,6 +17,60 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey();
+  void login() async {
+    FirebaseAuth.instance
+        .signInWithEmailAndPassword(
+            email: "amjad@gmail.com", password: "amjad@gmail.com")
+        .then((e) async {
+      FirebaseFirestore.instance
+          .collection("UserRequest")
+          .where("email", isEqualTo: e.user!.email)
+          .where("uid", isEqualTo: e.user!.uid)
+          .where("status", isEqualTo: "Approve")
+          .get()
+          .then((main) async {
+        if (main.docs.length < 1) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Your Application is Not Approved yet'),
+              action: SnackBarAction(label: 'OK', onPressed: () {}),
+              backgroundColor: Colors.teal,
+            ),
+          );
+        } else {
+          var info = main.docs[0].data();
+          final prefs = await SharedPreferences.getInstance();
+          final userinfo = json.encode({
+            "name": info["Name"],
+            "phoneNo": info["Phoneno"],
+            "address": info["address"],
+            "fphoneNo": info["fPhonenumber"],
+            "fname": info["fName"],
+            "designation": info["designation"],
+            "age": info["age"],
+            "uid": e.user!.uid,
+            "owner": info["owner"],
+            "email": info["email"]
+          });
+          await prefs.setString('userinfo', userinfo);
+          Navigator.push(
+              context,
+              PageTransition(
+                  duration: Duration(milliseconds: 700),
+                  type: PageTransitionType.rightToLeftWithFade,
+                  child: Home()));
+        }
+      });
+    }).catchError((e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.toString()),
+          action: SnackBarAction(label: 'OK', onPressed: () {}),
+          backgroundColor: Colors.teal,
+        ),
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -222,16 +281,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   color: Colors.teal[800],
                                                 ),
                                                 onPressed: () => {
-                                                  Navigator.push(
-                                                      context,
-                                                      PageTransition(
-                                                          duration: Duration(
-                                                              milliseconds:
-                                                                  700),
-                                                          type:
-                                                              PageTransitionType
-                                                                  .fade,
-                                                          child: Home()))
+                                                  login()
                                                   // Navigator.of(context)
                                                   //     .pushNamed(Home.routeName)
                                                 },
@@ -241,7 +291,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         ],
                                       ),
                                     ),
-                                    onPressed: () => {},
+                                    onPressed: () => {login()},
                                   ),
                                 ),
                               ],
