@@ -6,6 +6,7 @@ import 'package:notify_app/Screens/LoginPage.dart';
 import 'Screens/RequestLogin.dart';
 import 'Screens/Dashboard.dart';
 import 'package:provider/provider.dart';
+import 'Screens/Profile.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -69,6 +70,7 @@ class _MyAppState extends State<MyApp> {
           LoginScreen.routename: (ctx) => LoginScreen(),
           requestLoginPage.route: (ctx) => requestLoginPage(),
           Home.routeName: (ctx) => Home(),
+          UserProfile.routename: (ctx) => UserProfile(),
         });
   }
 }

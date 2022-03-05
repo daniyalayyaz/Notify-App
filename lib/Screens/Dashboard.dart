@@ -4,9 +4,11 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:marquee/marquee.dart';
+import 'package:notify_app/Screens/Profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:page_transition/page_transition.dart';
 
 class Home extends StatefulWidget {
   static final routeName = "home";
@@ -20,6 +22,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   var buttonLabels;
+  List<String> urls = [];
   bool _isInit = true;
   bool _isLoading = true;
   CollectionReference _collectionRef =
@@ -59,18 +62,23 @@ class _HomeState extends State<Home> {
           _isLoading = false;
         });
       });
+      _collectionRef.doc('Slider').snapshots().listen((snap) {
+        urls = [
+          (snap.data() as Map)["image1"],
+          (snap.data() as Map)["image2"],
+          (snap.data() as Map)["image3"],
+          (snap.data() as Map)["image4"]
+        ];
+        print(buttonLabels);
+        setState(() {
+          _isLoading = false;
+        });
+      });
     }
     _isInit = false;
     super.didChangeDependencies();
   }
 
-  List<String> urls = [
-    "https://www.xavor.com/wp-content/uploads/mobile-app-security-checklist.jpg",
-    "https://m.media-amazon.com/images/I/51siyARmfOL._AC_SL1100_.jpg",
-    "https://images.unsplash.com/photo-1638913662584-731da41f5a59?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxzZWFyY2h8MXx8c2VjdXJpdHl8ZW58MHx8MHx8&w=1000&q=80",
-    "https://static1.anpoimages.com/wordpress/wp-content/uploads/2020/07/02/MiSecurity.png",
-    "https://media.istockphoto.com/photos/digital-security-concept-picture-id1289956604?b=1&k=20&m=1289956604&s=170667a&w=0&h=fpkFDlqRrw_IzsQpZkuYqfgCUw7VMemUT8IuCH4-e9w="
-  ];
   late VideoPlayerController _controller;
   bool startedPlaying = false;
   void initState() {
@@ -111,21 +119,42 @@ class _HomeState extends State<Home> {
               backgroundColor: Colors.teal,
               title: FittedBox(fit: BoxFit.fitWidth, child: Text('Home')),
               actions: <Widget>[
-                ElevatedButton(
-                  onPressed: () => {},
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all(Colors.greenAccent),
+                IconButton(
+                  icon: Icon(
+                    Icons.person,
+                    color: Colors.white,
                   ),
-                  child: FittedBox(
-                      fit: BoxFit.cover,
-                      child: Text(
-                        'Logout',
-                        style: TextStyle(
-                            color: Colors.teal[900],
-                            fontWeight: FontWeight.bold),
-                      )),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        PageTransition(
+                            duration: Duration(milliseconds: 700),
+                            type: PageTransitionType.rightToLeftWithFade,
+                            child: UserProfile()));
+                  },
                 ),
+                IconButton(
+                  icon: Icon(
+                    Icons.logout_rounded,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {},
+                ),
+                // ElevatedButton(
+                //   onPressed: () => {},
+                //   style: ButtonStyle(
+                //     backgroundColor:
+                //         MaterialStateProperty.all(Colors.greenAccent),
+                //   ),
+                //   child: FittedBox(
+                //       fit: BoxFit.cover,
+                //       child: Text(
+                //         'Logout',
+                //         style: TextStyle(
+                //             color: Colors.teal[900],
+                //             fontWeight: FontWeight.bold),
+                //       )),
+                // ),
               ],
             ),
             // drawer: Drawner(navigators: navigators),
