@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:notify_app/Screens/Dashboard.dart';
 import 'package:notify_app/Screens/LoginPage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'Screens/RequestLogin.dart';
 import 'Screens/Dashboard.dart';
 import 'package:provider/provider.dart';
@@ -65,7 +68,15 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
         title: 'Notify-App',
         theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'Poppins'),
-        home: LoginScreen(),
+        home: FutureBuilder(
+            future: SharedPreferences.getInstance(),
+            builder: (context, AsyncSnapshot snapshot) {
+              return snapshot.data.containsKey("token")
+                  ? snapshot.data.getBool("token")
+                      ? Home()
+                      : LoginScreen()
+                  : LoginScreen();
+            }),
         routes: {
           LoginScreen.routename: (ctx) => LoginScreen(),
           requestLoginPage.route: (ctx) => requestLoginPage(),

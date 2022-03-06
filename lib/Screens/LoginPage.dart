@@ -16,60 +16,67 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  var logins = {"user": "", "pass": ""};
   final GlobalKey<FormState> _formKey = GlobalKey();
   void login() async {
-    FirebaseAuth.instance
-        .signInWithEmailAndPassword(
-            email: "amjad@gmail.com", password: "amjad@gmail.com")
-        .then((e) async {
-      FirebaseFirestore.instance
-          .collection("UserRequest")
-          .where("email", isEqualTo: e.user!.email)
-          .where("uid", isEqualTo: e.user!.uid)
-          .where("status", isEqualTo: "Approve")
-          .get()
-          .then((main) async {
-        if (main.docs.length < 1) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Your Application is Not Approved yet'),
-              action: SnackBarAction(label: 'OK', onPressed: () {}),
-              backgroundColor: Colors.teal,
-            ),
-          );
-        } else {
-          var info = main.docs[0].data();
-          final prefs = await SharedPreferences.getInstance();
-          final userinfo = json.encode({
-            "name": info["Name"],
-            "phoneNo": info["Phoneno"],
-            "address": info["address"],
-            "fphoneNo": info["fPhonenumber"],
-            "fname": info["fName"],
-            "designation": info["designation"],
-            "age": info["age"],
-            "uid": e.user!.uid,
-            "owner": info["owner"],
-            "email": info["email"]
-          });
-          await prefs.setString('userinfo', userinfo);
-          Navigator.push(
-              context,
-              PageTransition(
-                  duration: Duration(milliseconds: 700),
-                  type: PageTransitionType.rightToLeftWithFade,
-                  child: Home()));
-        }
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      FirebaseAuth.instance
+          .signInWithEmailAndPassword(
+              email: logins['user'].toString().trim(),
+              password: logins['pass'].toString().trim())
+          .then((e) async {
+        FirebaseFirestore.instance
+            .collection("UserRequest")
+            .where("email", isEqualTo: e.user!.email)
+            .where("uid", isEqualTo: e.user!.uid)
+            .where("status", isEqualTo: "Approve")
+            .get()
+            .then((main) async {
+          if (main.docs.length < 1) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Your Application is Not Approved yet'),
+                action: SnackBarAction(label: 'OK', onPressed: () {}),
+                backgroundColor: Colors.teal,
+              ),
+            );
+          } else {
+            var info = main.docs[0].data();
+            final prefs = await SharedPreferences.getInstance();
+            final userinfo = json.encode({
+              "name": info["Name"],
+              "phoneNo": info["Phoneno"],
+              "address": info["address"],
+              "fphoneNo": info["fPhonenumber"],
+              "fname": info["fName"],
+              "designation": info["designation"],
+              "age": info["age"],
+              "uid": e.user!.uid,
+              "owner": info["owner"],
+              "email": info["email"]
+            });
+            await prefs.setString('userinfo', userinfo);
+            await prefs.setBool("token", true);
+
+            Navigator.push(
+                context,
+                PageTransition(
+                    duration: Duration(milliseconds: 700),
+                    type: PageTransitionType.rightToLeftWithFade,
+                    child: Home()));
+          }
+        });
+      }).catchError((e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.toString()),
+            action: SnackBarAction(label: 'OK', onPressed: () {}),
+            backgroundColor: Colors.teal,
+          ),
+        );
       });
-    }).catchError((e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(e.toString()),
-          action: SnackBarAction(label: 'OK', onPressed: () {}),
-          backgroundColor: Colors.teal,
-        ),
-      );
-    });
+    }
   }
 
   @override
@@ -151,7 +158,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                         return 'Invalid email!';
                                       }
                                     },
-                                    onSaved: (value) {},
+                                    onSaved: (value) {
+                                      logins['user'] = value!;
+                                    },
                                   ),
                                 )
                               ],
@@ -198,7 +207,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                         return 'Password is too short!';
                                       }
                                     },
-                                    onSaved: (value) {},
+                                    onSaved: (value) {
+                                      logins['pass'] = value!;
+                                    },
                                     obscureText: true,
                                   ),
                                 )

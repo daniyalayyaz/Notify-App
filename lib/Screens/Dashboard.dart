@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:marquee/marquee.dart';
+import 'package:notify_app/Screens/LoginPage.dart';
 import 'package:notify_app/Screens/Profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
@@ -138,7 +139,19 @@ class _HomeState extends State<Home> {
                     Icons.logout_rounded,
                     color: Colors.white,
                   ),
-                  onPressed: () {},
+                  onPressed: () async {
+                    var c = await SharedPreferences.getInstance();
+                    c.clear();
+                      Navigator.push(
+                                              context,
+                                              PageTransition(
+                                                  duration: Duration(
+                                                      milliseconds: 700),
+                                                  type: PageTransitionType
+                                                      .rightToLeftWithFade,
+                                                  child: LoginScreen()));
+
+                  },
                 ),
                 // ElevatedButton(
                 //   onPressed: () => {},
