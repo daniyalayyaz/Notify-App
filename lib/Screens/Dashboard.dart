@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:marquee/marquee.dart';
@@ -10,9 +8,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class Home extends StatefulWidget {
   static final routeName = "home";
+
   static List<IconData> navigatorsIcon = [
     Icons.desktop_mac_rounded,
   ];
@@ -28,6 +28,9 @@ class _HomeState extends State<Home> {
   bool _isLoading = true;
   CollectionReference _collectionRef =
       FirebaseFirestore.instance.collection('utility');
+  void gettoken() async {
+    String? token = await FirebaseMessaging.instance.getToken();
+  }
 
   void alertme(String collect) async {
     final prefs = await SharedPreferences.getInstance();
@@ -84,7 +87,6 @@ class _HomeState extends State<Home> {
   bool startedPlaying = false;
   void initState() {
     super.initState();
-
     _controller = VideoPlayerController.asset('assets/Demo.mp4');
     _controller.addListener(() {
       if (startedPlaying && !_controller.value.isPlaying) {}
@@ -142,15 +144,12 @@ class _HomeState extends State<Home> {
                   onPressed: () async {
                     var c = await SharedPreferences.getInstance();
                     c.clear();
-                      Navigator.push(
-                                              context,
-                                              PageTransition(
-                                                  duration: Duration(
-                                                      milliseconds: 700),
-                                                  type: PageTransitionType
-                                                      .rightToLeftWithFade,
-                                                  child: LoginScreen()));
-
+                    Navigator.push(
+                        context,
+                        PageTransition(
+                            duration: Duration(milliseconds: 700),
+                            type: PageTransitionType.rightToLeftWithFade,
+                            child: LoginScreen()));
                   },
                 ),
                 // ElevatedButton(
