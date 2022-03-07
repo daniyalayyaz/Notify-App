@@ -33,6 +33,9 @@ dependencies:
   marquee: ^2.2.1
   video_player: ^2.2.4
   shared_preferences: ^2.0.13
+  firebase_messaging: ^10.0.9
+  flutter_local_notifications: ^9.4.0
+  overlay_support: ^1.2.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
