@@ -16,7 +16,7 @@ class _UserProfileState extends State<UserProfile> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.teal,
-        title: FittedBox(fit: BoxFit.fitWidth, child: Text('Home')),
+        title: FittedBox(fit: BoxFit.fitWidth, child: Text('Profile')),
       ),
       body: FutureBuilder(
           future: SharedPreferences.getInstance(),
@@ -50,7 +50,7 @@ class _UserProfileState extends State<UserProfile> {
                         ),
                         child: Column(children: [
                           SizedBox(
-                            height: 110.0,
+                            height: 70.0,
                           ),
                           CircleAvatar(
                             radius: 65.0,
@@ -86,7 +86,7 @@ class _UserProfileState extends State<UserProfile> {
                         child: Center(
                             child: Card(
                                 margin:
-                                    EdgeInsets.fromLTRB(0.0, 45.0, 0.0, 20.0),
+                                    EdgeInsets.fromLTRB(0.0, 55.0, 0.0, 20.0),
                                 child: Container(
                                     width: 310.0,
                                     //height: 290.0,
@@ -330,7 +330,7 @@ class _UserProfileState extends State<UserProfile> {
                   ],
                 ),
                 Positioned(
-                    top: MediaQuery.of(context).size.height * 0.45,
+                    top: MediaQuery.of(context).size.height * 0.40,
                     left: 20.0,
                     right: 20.0,
                     child: Card(

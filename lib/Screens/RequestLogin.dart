@@ -81,7 +81,8 @@ class _requestLoginPageState extends State<requestLoginPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Details Sent!'),
-          action: SnackBarAction(label: 'OK', onPressed: () {}),
+          action: SnackBarAction(
+              label: 'OK', textColor: Colors.greenAccent, onPressed: () {}),
           backgroundColor: Colors.teal,
         ),
       );
