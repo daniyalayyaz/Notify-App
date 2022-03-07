@@ -49,6 +49,14 @@ class _HomeState extends State<Home> {
       "owner": userinfo["owner"],
       "email": userinfo["email"]
     });
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("Your Request is sent"),
+        action: SnackBarAction(
+            label: 'OK', textColor: Colors.greenAccent, onPressed: () {}),
+        backgroundColor: Colors.teal,
+      ),
+    );
   }
 
   void didChangeDependencies() async {
@@ -217,26 +225,33 @@ class _HomeState extends State<Home> {
                           Flexible(
                             flex: 2,
                             fit: FlexFit.loose,
-                            child: FutureBuilder<bool>(
-                              future: started(),
-                              builder: (BuildContext context,
-                                  AsyncSnapshot<bool> snapshot) {
-                                if (snapshot.data == true) {
-                                  return Container(
-                                    height: 200,
-                                    child: AspectRatio(
-                                      aspectRatio:
-                                          _controller.value.aspectRatio,
-                                      child: VideoPlayer(_controller),
-                                    ),
-                                  );
-                                } else {
-                                  return const Text(
-                                    'Waiting for Video to load...',
-                                    style: TextStyle(color: Colors.teal),
-                                  );
-                                }
-                              },
+                            child: Container(
+                              child: FutureBuilder<bool>(
+                                future: started(),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<bool> snapshot) {
+                                  if (snapshot.data == true) {
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(20.0),
+                                      ),
+                                      height: 200,
+                                      child: AspectRatio(
+                                        aspectRatio:
+                                            _controller.value.aspectRatio,
+                                        child: Container(
+                                            child: VideoPlayer(_controller)),
+                                      ),
+                                    );
+                                  } else {
+                                    return const Text(
+                                      'Waiting for Video to load...',
+                                      style: TextStyle(color: Colors.teal),
+                                    );
+                                  }
+                                },
+                              ),
                             ),
                           ),
                           Column(

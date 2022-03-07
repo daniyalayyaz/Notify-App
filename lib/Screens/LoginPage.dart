@@ -62,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Navigator.push(
                 context,
                 PageTransition(
-                    duration: Duration(milliseconds: 700),
+                    duration: Duration(milliseconds: 100),
                     type: PageTransitionType.rightToLeftWithFade,
                     child: Home()));
           }
