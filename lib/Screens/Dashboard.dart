@@ -346,6 +346,9 @@ class _HomeState extends State<Home> {
                                               3,
                                           child: ElevatedButton(
                                             style: ButtonStyle(
+                                                elevation:
+                                                    MaterialStateProperty.all(
+                                                        20),
                                                 backgroundColor:
                                                     MaterialStateProperty.all(
                                                         Colors.greenAccent)),
@@ -369,6 +372,9 @@ class _HomeState extends State<Home> {
                                               3,
                                           child: ElevatedButton(
                                             style: ButtonStyle(
+                                                elevation:
+                                                    MaterialStateProperty.all(
+                                                        20),
                                                 backgroundColor:
                                                     MaterialStateProperty.all(
                                                         Colors.greenAccent)),
@@ -392,6 +398,8 @@ class _HomeState extends State<Home> {
                                           1.42,
                                       child: ElevatedButton(
                                         style: ButtonStyle(
+                                            elevation:
+                                                MaterialStateProperty.all(20),
                                             backgroundColor:
                                                 MaterialStateProperty.all(
                                                     Colors.greenAccent)),
