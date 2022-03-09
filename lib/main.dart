@@ -1,5 +1,4 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:notify_app/Screens/Dashboard.dart';
 import 'package:notify_app/Screens/LoginPage.dart';
@@ -19,7 +18,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final FirebaseMessaging _fc = FirebaseMessaging.instance;
+  //final FirebaseMessaging _fc = FirebaseMessaging.instance;
   bool _initialized = false;
   bool _error = false;
 
@@ -42,7 +41,7 @@ class _MyAppState extends State<MyApp> {
     initializeFlutterFire();
 
     super.initState();
-    _fc.subscribeToTopic("Events");
+    //_fc.subscribeToTopic("Events");
   }
 
   @override

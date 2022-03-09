@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 
 class Home extends StatefulWidget {
   static final routeName = "home";
@@ -28,9 +28,6 @@ class _HomeState extends State<Home> {
   bool _isLoading = true;
   CollectionReference _collectionRef =
       FirebaseFirestore.instance.collection('utility');
-  void gettoken() async {
-    String? token = await FirebaseMessaging.instance.getToken();
-  }
 
   void alertme(String collect) async {
     final prefs = await SharedPreferences.getInstance();
@@ -95,7 +92,7 @@ class _HomeState extends State<Home> {
   bool startedPlaying = false;
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.asset('assets/Demo.mp4');
+    _controller = VideoPlayerController.asset('assets/bee.mp4');
     _controller.addListener(() {
       if (startedPlaying && !_controller.value.isPlaying) {}
     });
@@ -181,7 +178,17 @@ class _HomeState extends State<Home> {
             body: LayoutBuilder(builder: (ctx, constraints) {
               return Center(
                 child: Container(
-                    color: Colors.blueGrey[50],
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          colors: [
+                            const Color(0xFFB9F6CA),
+                            const Color(0xFFE0F2F1)
+                          ],
+                          begin: const FractionalOffset(0.0, 0.0),
+                          end: const FractionalOffset(1.0, 0.0),
+                          stops: [0.0, 1.0],
+                          tileMode: TileMode.clamp),
+                    ),
                     child: Padding(
                       padding: const EdgeInsets.all(14.0),
                       child: Column(
@@ -208,10 +215,10 @@ class _HomeState extends State<Home> {
                                       .toList(),
                                   //Slider Container properties
                                   options: CarouselOptions(
-                                    height: 180.0,
+                                    height: 150.0,
                                     enlargeCenterPage: true,
                                     autoPlay: true,
-                                    aspectRatio: 16 / 9,
+                                    aspectRatio: 12 / 9,
                                     autoPlayCurve: Curves.fastOutSlowIn,
                                     enableInfiniteScroll: true,
                                     autoPlayAnimationDuration:
@@ -222,115 +229,191 @@ class _HomeState extends State<Home> {
                               ),
                             ],
                           ),
-                          Flexible(
-                            flex: 2,
-                            fit: FlexFit.loose,
+                          Card(
+                            elevation: 30,
+                            color: Colors.green[50],
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
                             child: Container(
-                              child: FutureBuilder<bool>(
-                                future: started(),
-                                builder: (BuildContext context,
-                                    AsyncSnapshot<bool> snapshot) {
-                                  if (snapshot.data == true) {
-                                    return Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(20.0),
+                              height: 200,
+                              width: double.infinity,
+                              child: Center(
+                                  child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.video_collection,
+                                          color: Colors.teal,
+                                        ),
+                                        Text(
+                                          " Demo Video",
+                                          style: TextStyle(
+                                              color: Colors.teal,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Flexible(
+                                    flex: 2,
+                                    fit: FlexFit.loose,
+                                    child: Container(
+                                      margin: EdgeInsets.only(bottom: 20),
+                                      child: FutureBuilder<bool>(
+                                        future: started(),
+                                        builder: (BuildContext context,
+                                            AsyncSnapshot<bool> snapshot) {
+                                          if (snapshot.data == true) {
+                                            return Container(
+                                              margin:
+                                                  EdgeInsets.only(bottom: 10),
+                                              height: 160,
+                                              width: double.infinity,
+                                              child: AspectRatio(
+                                                aspectRatio: _controller
+                                                    .value.aspectRatio,
+                                                child: Container(
+                                                    child: VideoPlayer(
+                                                        _controller)),
+                                              ),
+                                            );
+                                          } else {
+                                            return const Text(
+                                              'Waiting for Video to load...',
+                                              style:
+                                                  TextStyle(color: Colors.teal),
+                                            );
+                                          }
+                                        },
                                       ),
-                                      height: 200,
-                                      child: AspectRatio(
-                                        aspectRatio:
-                                            _controller.value.aspectRatio,
-                                        child: Container(
-                                            child: VideoPlayer(_controller)),
-                                      ),
-                                    );
-                                  } else {
-                                    return const Text(
-                                      'Waiting for Video to load...',
-                                      style: TextStyle(color: Colors.teal),
-                                    );
-                                  }
-                                },
-                              ),
+                                    ),
+                                  ),
+                                ],
+                              )),
                             ),
                           ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                          Card(
+                            color: Colors.teal,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            elevation: 20,
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: SizedBox(
-                                      height: 50,
-                                      width:
-                                          MediaQuery.of(context).size.width / 3,
-                                      child: ElevatedButton(
-                                        style: ButtonStyle(
-                                            backgroundColor:
-                                                MaterialStateProperty.all(
-                                                    Colors.greenAccent)),
-                                        onPressed: () =>
-                                            {alertme("button-one")},
-                                        child: Text(buttonLabels[0],
-                                            style: TextStyle(
-                                                color: Colors.teal[900],
-                                                fontWeight: FontWeight.bold)),
-                                      ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.speaker_phone_rounded,
+                                          color: Colors.white,
+                                        ),
+                                        Text(
+                                          'Press Button to raise Alarm!',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        ),
+                                      ],
                                     ),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: SizedBox(
+                                          height: 50,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              3,
+                                          child: ElevatedButton(
+                                            style: ButtonStyle(
+                                                backgroundColor:
+                                                    MaterialStateProperty.all(
+                                                        Colors.greenAccent)),
+                                            onPressed: () =>
+                                                {alertme("button-one")},
+                                            child: Text(buttonLabels[0],
+                                                style: TextStyle(
+                                                    color: Colors.teal[900],
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: SizedBox(
+                                          height: 50,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              3,
+                                          child: ElevatedButton(
+                                            style: ButtonStyle(
+                                                backgroundColor:
+                                                    MaterialStateProperty.all(
+                                                        Colors.greenAccent)),
+                                            onPressed: () =>
+                                                {alertme("button-two")},
+                                            child: Text(buttonLabels[1],
+                                                style: TextStyle(
+                                                    color: Colors.teal[900],
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: SizedBox(
                                       height: 50,
-                                      width:
-                                          MediaQuery.of(context).size.width / 3,
+                                      width: MediaQuery.of(context).size.width /
+                                          1.42,
                                       child: ElevatedButton(
                                         style: ButtonStyle(
                                             backgroundColor:
                                                 MaterialStateProperty.all(
                                                     Colors.greenAccent)),
                                         onPressed: () =>
-                                            {alertme("button-two")},
-                                        child: Text(buttonLabels[1],
-                                            style: TextStyle(
-                                                color: Colors.teal[900],
-                                                fontWeight: FontWeight.bold)),
+                                            {alertme("button-three")},
+                                        child: Text(
+                                          buttonLabels[2],
+                                          style: TextStyle(
+                                              color: Colors.teal[900],
+                                              fontWeight: FontWeight.bold),
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ],
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: SizedBox(
-                                  height: 50,
-                                  width:
-                                      MediaQuery.of(context).size.width / 1.42,
-                                  child: ElevatedButton(
-                                    style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all(
-                                                Colors.greenAccent)),
-                                    onPressed: () => {alertme("button-three")},
-                                    child: Text(
-                                      buttonLabels[2],
-                                      style: TextStyle(
-                                          color: Colors.teal[900],
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
                           Container(
-                            color: Colors.teal[100],
+                            color: Colors.teal,
                             height: 30,
                             child: Marquee(
                               text: 'Security Notify App',
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
                               scrollAxis: Axis.horizontal,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               blankSpace: 20.0,
