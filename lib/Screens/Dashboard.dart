@@ -92,7 +92,7 @@ class _HomeState extends State<Home> {
   bool startedPlaying = false;
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.asset('assets/bee.mp4');
+    _controller = VideoPlayerController.asset('assets/Demo.mp4');
     _controller.addListener(() {
       if (startedPlaying && !_controller.value.isPlaying) {}
     });
@@ -274,13 +274,17 @@ class _HomeState extends State<Home> {
                                               margin:
                                                   EdgeInsets.only(bottom: 10),
                                               height: 160,
-                                              width: double.infinity,
+                                              width: 280,
                                               child: AspectRatio(
                                                 aspectRatio: _controller
                                                     .value.aspectRatio,
                                                 child: Container(
-                                                    child: VideoPlayer(
-                                                        _controller)),
+                                                    child: ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20),
+                                                        child: VideoPlayer(
+                                                            _controller))),
                                               ),
                                             );
                                           } else {
