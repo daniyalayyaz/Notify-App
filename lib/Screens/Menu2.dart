@@ -1,0 +1,262 @@
+import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:marquee/marquee.dart';
+import 'package:notify_app/Screens/LoginPage.dart';
+import 'package:notify_app/Screens/Profile.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:video_player/video_player.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:page_transition/page_transition.dart';
+
+class Menu2 extends StatefulWidget {
+  static final routeName = "Menu2";
+
+  static List<IconData> navigatorsIcon = [
+    Icons.desktop_mac_rounded,
+  ];
+
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Menu2> {
+  var buttonLabels;
+  List<String> urls = [];
+  bool _isInit = true;
+  bool _isLoading = true;
+  CollectionReference _collectionRef =
+      FirebaseFirestore.instance.collection('utility');
+
+  void alertme(String collect) async {
+    final prefs = await SharedPreferences.getInstance();
+    final userinfo = json.decode(prefs.getString('userinfo') as String);
+    await FirebaseFirestore.instance.collection(collect).add({
+      "name": userinfo["name"],
+      "phoneNo": userinfo["phoneNo"],
+      "address": userinfo["address"],
+      "fphoneNo": userinfo["fphoneNo"],
+      "fname": userinfo["fname"],
+      "designation": userinfo["designation"],
+      "age": userinfo["age"],
+      "pressedTime": FieldValue.serverTimestamp(),
+      "type": collect,
+      "uid": userinfo["uid"],
+      "owner": userinfo["owner"],
+      "email": userinfo["email"]
+    });
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("Your Request is sent"),
+        action: SnackBarAction(
+            label: 'OK', textColor: Colors.greenAccent, onPressed: () {}),
+        backgroundColor: Colors.teal,
+      ),
+    );
+  }
+
+  void didChangeDependencies() async {
+    if (_isInit) {
+      setState(() {
+        _isLoading = true;
+      });
+      _collectionRef.doc('Button').snapshots().listen((snap) {
+        buttonLabels = [
+          (snap.data() as Map)["btn1"],
+          (snap.data() as Map)["btn2"],
+          (snap.data() as Map)["btn3"]
+        ];
+        setState(() {
+          _isLoading = false;
+        });
+      });
+      _collectionRef.doc('Slider').snapshots().listen((snap) {
+        urls = [
+          (snap.data() as Map)["image1"],
+          (snap.data() as Map)["image2"],
+          (snap.data() as Map)["image3"],
+          (snap.data() as Map)["image4"]
+        ];
+        print(buttonLabels);
+        setState(() {
+          _isLoading = false;
+        });
+      });
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
+
+  late VideoPlayerController _controller;
+  bool startedPlaying = false;
+  void initState() {
+    super.initState();
+    _controller = VideoPlayerController.asset('assets/Demo.mp4');
+    _controller.addListener(() {
+      if (startedPlaying && !_controller.value.isPlaying) {}
+    });
+    _controller.setLooping(true);
+  }
+
+  Future<bool> started() async {
+    await _controller.initialize();
+    await _controller.play();
+    startedPlaying = true;
+    return true;
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  var prefs;
+
+  final List<String> navigators = [
+    "View History",
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return _isLoading
+        ? Center(child: CircularProgressIndicator())
+        : Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.teal,
+              title: FittedBox(fit: BoxFit.fitWidth, child: Text('Menu2')),
+              actions: <Widget>[
+                IconButton(
+                  icon: Icon(
+                    Icons.person,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        PageTransition(
+                            duration: Duration(milliseconds: 700),
+                            type: PageTransitionType.rightToLeftWithFade,
+                            child: UserProfile()));
+                  },
+                ),
+                IconButton(
+                  icon: Icon(
+                    Icons.logout_rounded,
+                    color: Colors.white,
+                  ),
+                  onPressed: () async {
+                    var c = await SharedPreferences.getInstance();
+                    c.clear();
+                    Navigator.push(
+                        context,
+                        PageTransition(
+                            duration: Duration(milliseconds: 700),
+                            type: PageTransitionType.rightToLeftWithFade,
+                            child: LoginScreen()));
+                  },
+                ),
+                // ElevatedButton(
+                //   onPressed: () => {},
+                //   style: ButtonStyle(
+                //     backgroundColor:
+                //         MaterialStateProperty.all(Colors.greenAccent),
+                //   ),
+                //   child: FittedBox(
+                //       fit: BoxFit.cover,
+                //       child: Text(
+                //         'Logout',
+                //         style: TextStyle(
+                //             color: Colors.teal[900],
+                //             fontWeight: FontWeight.bold),
+                //       )),
+                // ),
+              ],
+            ),
+            // drawer: Drawner(navigators: navigators),
+            body: LayoutBuilder(builder: (ctx, constraints) {
+              return Center(
+                child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          colors: [
+                            const Color(0xFFB9F6CA),
+                            const Color(0xFFE0F2F1)
+                          ],
+                          begin: const FractionalOffset(0.0, 0.0),
+                          end: const FractionalOffset(1.0, 0.0),
+                          stops: [0.0, 1.0],
+                          tileMode: TileMode.clamp),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(14.0),
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            color: Colors.teal,
+                            height: 30,
+                            child: Marquee(
+                              text: 'Security Notify App',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                              scrollAxis: Axis.horizontal,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              blankSpace: 20.0,
+                              velocity: 100.0,
+                              pauseAfterRound: Duration(milliseconds: 100),
+                              startPadding: 10.0,
+                              accelerationDuration: Duration(seconds: 1),
+                              accelerationCurve: Curves.linear,
+                              decelerationDuration: Duration(milliseconds: 500),
+                              decelerationCurve: Curves.easeOut,
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Flexible(
+                                flex: 1,
+                                fit: FlexFit.tight,
+                                child: CarouselSlider(
+                                  items: urls
+                                      .map((e) => Container(
+                                            margin: EdgeInsets.all(6.0),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                              image: DecorationImage(
+                                                image:
+                                                    NetworkImage(e.toString()),
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ))
+                                      .toList(),
+                                  //Slider Container properties
+                                  options: CarouselOptions(
+                                    // height: 450.0,
+                                    enlargeCenterPage: true,
+                                    autoPlay: true,
+                                    aspectRatio: 30 / 46,
+                                    autoPlayCurve: Curves.fastOutSlowIn,
+                                    enableInfiniteScroll: true,
+                                    autoPlayAnimationDuration:
+                                        Duration(milliseconds: 800),
+                                    viewportFraction: 1,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ], //<Widget>[]
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                      ), //Column
+                    )
+                    //Padding
+                    ), //Container
+              );
+            }) //Center
+            ); //Scaffold
+  }
+}

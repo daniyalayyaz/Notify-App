@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:notify_app/Screens/Dashboard.dart';
 import 'package:notify_app/Screens/LoginPage.dart';
+import 'package:notify_app/Screens/Tab.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Screens/RequestLogin.dart';
 import 'Screens/Dashboard.dart';
@@ -70,11 +71,15 @@ class _MyAppState extends State<MyApp> {
         home: FutureBuilder(
             future: SharedPreferences.getInstance(),
             builder: (context, AsyncSnapshot snapshot) {
-              return snapshot.data.containsKey("token")
-                  ? snapshot.data.getBool("token")
-                      ? Home()
-                      : LoginScreen()
-                  : LoginScreen();
+              if (snapshot.connectionState == ConnectionState.done) {
+                return snapshot.data.containsKey("token")
+                    ? snapshot.data.getBool("token")
+                        ? TabsScreen()
+                        : LoginScreen()
+                    : LoginScreen();
+              } else {
+                return LoginScreen();
+              }
             }),
         routes: {
           LoginScreen.routename: (ctx) => LoginScreen(),
