@@ -29,28 +29,54 @@ class _HomeState extends State<Home> {
       FirebaseFirestore.instance.collection('utility');
 
   void alertme(String collect) async {
-    final prefs = await SharedPreferences.getInstance();
-    final userinfo = json.decode(prefs.getString('userinfo') as String);
-    await FirebaseFirestore.instance.collection(collect).add({
-      "name": userinfo["name"],
-      "phoneNo": userinfo["phoneNo"],
-      "address": userinfo["address"],
-      "fphoneNo": userinfo["fphoneNo"],
-      "fname": userinfo["fname"],
-      "designation": userinfo["designation"],
-      "age": userinfo["age"],
-      "pressedTime": FieldValue.serverTimestamp(),
-      "type": collect,
-      "uid": userinfo["uid"],
-      "owner": userinfo["owner"],
-      "email": userinfo["email"]
-    });
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text("Your Request is sent"),
-        action: SnackBarAction(
-            label: 'OK', textColor: Colors.greenAccent, onPressed: () {}),
-        backgroundColor: Colors.teal,
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('Are you sure?'),
+        content: Text(
+          'Are you sure you want to send a Request?',
+        ),
+        actions: <Widget>[
+          ElevatedButton(
+            child: Text('No'),
+            onPressed: () {
+              Navigator.of(ctx).pop(false);
+            },
+          ),
+          ElevatedButton(
+            child: Text('Yes'),
+            onPressed: () async {
+              final prefs = await SharedPreferences.getInstance();
+              final userinfo =
+                  json.decode(prefs.getString('userinfo') as String);
+              await FirebaseFirestore.instance.collection(collect).add({
+                "name": userinfo["name"],
+                "phoneNo": userinfo["phoneNo"],
+                "address": userinfo["address"],
+                "fphoneNo": userinfo["fphoneNo"],
+                "fname": userinfo["fname"],
+                "designation": userinfo["designation"],
+                "age": userinfo["age"],
+                "pressedTime": FieldValue.serverTimestamp(),
+                "type": collect,
+                "uid": userinfo["uid"],
+                "owner": userinfo["owner"],
+                "email": userinfo["email"]
+              });
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text("Your Request is sent"),
+                  action: SnackBarAction(
+                      label: 'OK',
+                      textColor: Colors.greenAccent,
+                      onPressed: () {}),
+                  backgroundColor: Colors.teal,
+                ),
+              );
+              Navigator.of(ctx).pop(true);
+            },
+          ),
+        ],
       ),
     );
   }
