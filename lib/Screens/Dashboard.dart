@@ -117,7 +117,7 @@ class _HomeState extends State<Home> {
   bool startedPlaying = false;
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.asset('assets/Demo.mp4');
+    _controller = VideoPlayerController.asset('assets/video-demo.mp4');
     _controller.addListener(() {
       if (startedPlaying && !_controller.value.isPlaying) {}
     });
@@ -150,13 +150,18 @@ class _HomeState extends State<Home> {
         ? Center(child: CircularProgressIndicator())
         : Scaffold(
             appBar: AppBar(
-              backgroundColor: Colors.teal,
-              title: FittedBox(fit: BoxFit.fitWidth, child: Text('Home')),
+              backgroundColor: Colors.white,
+              title: FittedBox(
+                  fit: BoxFit.fitWidth,
+                  child: Text(
+                    'Home',
+                    style: TextStyle(color: Colors.black),
+                  )),
               actions: <Widget>[
                 IconButton(
                   icon: Icon(
                     Icons.person,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                   onPressed: () {
                     Navigator.push(
@@ -170,7 +175,7 @@ class _HomeState extends State<Home> {
                 IconButton(
                   icon: Icon(
                     Icons.logout_rounded,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                   onPressed: () async {
                     var c = await SharedPreferences.getInstance();
@@ -204,23 +209,13 @@ class _HomeState extends State<Home> {
             body: LayoutBuilder(builder: (ctx, constraints) {
               return Center(
                 child: Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          colors: [
-                            const Color(0xFFB9F6CA),
-                            const Color(0xFFE0F2F1)
-                          ],
-                          begin: const FractionalOffset(0.0, 0.0),
-                          end: const FractionalOffset(1.0, 0.0),
-                          stops: [0.0, 1.0],
-                          tileMode: TileMode.clamp),
-                    ),
+                    color: Colors.white,
                     child: Padding(
                       padding: const EdgeInsets.all(14.0),
                       child: Column(
                         children: <Widget>[
                           Card(
-                            color: Colors.teal,
+                            color: Colors.grey[200],
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
                             ),
@@ -232,161 +227,183 @@ class _HomeState extends State<Home> {
                                     MainAxisAlignment.spaceAround,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.all(8.0),
+                                    padding: const EdgeInsets.all(12.0),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
                                         Icon(
-                                          Icons.speaker_phone_rounded,
-                                          color: Colors.white,
+                                          Icons.important_devices,
+                                          color: Colors.black,
                                         ),
                                         Text(
-                                          'Status',
+                                          ' Status',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              color: Colors.white),
+                                              color: Colors.black),
                                         ),
                                       ],
                                     ),
                                   ),
                                   FittedBox(
-                                    child: Text(
-                                      'Important News jd dkkd dkkd dkdkd dkdk',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          'Attention!',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.red,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            'Press Button only when it is important.',
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ),
+                                  )
                                 ],
                               ),
                             ),
                           ),
-                          Flexible(
-                            flex: 1,
-                            child: ListView(
-                              scrollDirection: Axis.horizontal,
-                              children: [
-                                Container(
-                                  width: 100,
-                                  child: Center(
-                                      child: Column(
-                                    children: [
-                                      Flexible(
-                                        flex: 1,
-                                        fit: FlexFit.tight,
-                                        child: Container(
-                                          margin: EdgeInsets.only(bottom: 2),
-                                          child: FutureBuilder<bool>(
-                                            future: started(),
-                                            builder: (BuildContext context,
-                                                AsyncSnapshot<bool> snapshot) {
-                                              if (snapshot.data == true) {
-                                                return Container(
-                                                  margin: EdgeInsets.only(
-                                                      bottom: 2),
-                                                  height: 160,
-                                                  width: 300,
-                                                  child: AspectRatio(
-                                                    aspectRatio: _controller
-                                                        .value.aspectRatio,
-                                                    child: Container(
-                                                        child: ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        20),
-                                                            child: VideoPlayer(
-                                                                _controller))),
-                                                  ),
-                                                );
-                                              } else {
-                                                return const Text(
-                                                  'Waiting for Video to load...',
-                                                  style: TextStyle(
-                                                      color: Colors.teal),
-                                                );
-                                              }
-                                            },
+                          Container(
+                            margin: EdgeInsets.only(top: 15),
+                            child: Center(
+                              child: Text("News & Feeds",
+                                  style:
+                                      TextStyle(fontWeight: FontWeight.bold)),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(top: 10, bottom: 20),
+                            height: 150,
+                            child: Flexible(
+                              flex: 1,
+                              child: ListView(
+                                scrollDirection: Axis.horizontal,
+                                children: [
+                                  Container(
+                                    width: 100,
+                                    child: Center(
+                                        child: Column(
+                                      children: [
+                                        Flexible(
+                                          flex: 1,
+                                          fit: FlexFit.tight,
+                                          child: Container(
+                                            // margin: EdgeInsets.only(bottom: 2),
+                                            child: FutureBuilder<bool>(
+                                              future: started(),
+                                              builder: (BuildContext context,
+                                                  AsyncSnapshot<bool>
+                                                      snapshot) {
+                                                if (snapshot.data == true) {
+                                                  return Container(
+                                                    // margin: EdgeInsets.only(
+                                                    //     bottom: 2),
+                                                    height: 100,
+                                                    width: 240,
+                                                    child: AspectRatio(
+                                                      aspectRatio: _controller
+                                                          .value.aspectRatio,
+                                                      child: Container(
+                                                          child: ClipRRect(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          20),
+                                                              child: VideoPlayer(
+                                                                  _controller))),
+                                                    ),
+                                                  );
+                                                } else {
+                                                  return const Text(
+                                                    'Waiting for Video to load...',
+                                                    style: TextStyle(
+                                                        color: Colors.black),
+                                                  );
+                                                }
+                                              },
+                                            ),
                                           ),
                                         ),
+                                      ],
+                                    )),
+                                  ),
+
+                                  Container(
+                                    margin: EdgeInsets.only(left: 8),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(25),
+                                      child: Image.network(
+                                        urls[1],
+                                        fit: BoxFit.fitHeight,
+                                        width: 100,
+                                        height: 250,
                                       ),
-                                    ],
-                                  )),
-                                ),
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(left: 8),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(25),
+                                      child: Image.network(
+                                        urls[2],
+                                        fit: BoxFit.fitHeight,
+                                        width: 100,
+                                        height: 250,
+                                      ),
+                                    ),
+                                  ),
 
-                                Container(
-                                  margin: EdgeInsets.all(8),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(18),
-                                      topRight: Radius.circular(18),
-                                    ),
-                                    child: Image.network(
-                                      urls[1],
-                                      fit: BoxFit.fitHeight,
-                                      width: 100,
-                                      height: 240,
+                                  Container(
+                                    margin: EdgeInsets.only(left: 8),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(25),
+                                      child: Image.network(
+                                        urls[0],
+                                        width: 100,
+                                        fit: BoxFit.fitHeight,
+                                        height: 250,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.all(8),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(18),
-                                      topRight: Radius.circular(18),
-                                    ),
-                                    child: Image.network(
-                                      urls[2],
-                                      fit: BoxFit.fitHeight,
-                                      width: 100,
-                                      height: 240,
-                                    ),
-                                  ),
-                                ),
-
-                                Container(
-                                  margin: EdgeInsets.all(8),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(18),
-                                      topRight: Radius.circular(18),
-                                    ),
-                                    child: Image.network(
-                                      urls[0],
-                                      width: 100,
-                                      fit: BoxFit.fitHeight,
-                                      height: 250,
-                                    ),
-                                  ),
-                                ),
-                                // Container(
-                                //   margin: EdgeInsets.all(6.0),
-                                //   decoration: BoxDecoration(
-                                //     borderRadius: BorderRadius.circular(8.0),
-                                //     image: DecorationImage(
-                                //       image: NetworkImage(urls[0].toString()),
-                                //       fit: BoxFit.cover,
-                                //     ),
-                                //   ),
-                                // ),
-                                // Container(
-                                //   margin: EdgeInsets.all(6.0),
-                                //   decoration: BoxDecoration(
-                                //     borderRadius: BorderRadius.circular(8.0),
-                                //     image: DecorationImage(
-                                //       image: NetworkImage(urls[0].toString()),
-                                //       fit: BoxFit.cover,
-                                //     ),
-                                //   ),
-                                // ),
-                              ],
+                                  // Container(
+                                  //   margin: EdgeInsets.all(6.0),
+                                  //   decoration: BoxDecoration(
+                                  //     borderRadius: BorderRadius.circular(8.0),
+                                  //     image: DecorationImage(
+                                  //       image: NetworkImage(urls[0].toString()),
+                                  //       fit: BoxFit.cover,
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  // Container(
+                                  //   margin: EdgeInsets.all(6.0),
+                                  //   decoration: BoxDecoration(
+                                  //     borderRadius: BorderRadius.circular(8.0),
+                                  //     image: DecorationImage(
+                                  //       image: NetworkImage(urls[0].toString()),
+                                  //       fit: BoxFit.cover,
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                ],
+                              ),
                             ),
                           ),
                           Expanded(
                             child: Card(
-                              color: Colors.teal,
+                              color: Colors.grey[200],
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20),
                               ),
@@ -405,13 +422,13 @@ class _HomeState extends State<Home> {
                                         children: [
                                           Icon(
                                             Icons.speaker_phone_rounded,
-                                            color: Colors.white,
+                                            color: Colors.black,
                                           ),
                                           Text(
-                                            'Press Button to raise Alarm!',
+                                            'Press any of these buttons!',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
-                                                color: Colors.white),
+                                                color: Colors.black),
                                           ),
                                         ],
                                       ),
@@ -426,7 +443,7 @@ class _HomeState extends State<Home> {
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width /
-                                                1.42,
+                                                1.40,
                                             child: ElevatedButton(
                                               style: ButtonStyle(
                                                   elevation:
@@ -434,14 +451,24 @@ class _HomeState extends State<Home> {
                                                           20),
                                                   backgroundColor:
                                                       MaterialStateProperty.all(
-                                                          Colors.greenAccent)),
+                                                          Colors.black)),
                                               onPressed: () =>
                                                   {alertme("button-one")},
-                                              child: Text(buttonLabels[0],
-                                                  style: TextStyle(
-                                                      color: Colors.teal[900],
-                                                      fontWeight:
-                                                          FontWeight.bold)),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Icon(
+                                                    Icons.call,
+                                                    color: Colors.white,
+                                                  ),
+                                                  Text('  ' + buttonLabels[0],
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.bold)),
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -451,7 +478,7 @@ class _HomeState extends State<Home> {
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width /
-                                                1.42,
+                                                1.40,
                                             child: ElevatedButton(
                                               style: ButtonStyle(
                                                   elevation:
@@ -459,14 +486,24 @@ class _HomeState extends State<Home> {
                                                           20),
                                                   backgroundColor:
                                                       MaterialStateProperty.all(
-                                                          Colors.greenAccent)),
+                                                          Colors.black)),
                                               onPressed: () =>
                                                   {alertme("button-two")},
-                                              child: Text(buttonLabels[1],
-                                                  style: TextStyle(
-                                                      color: Colors.teal[900],
-                                                      fontWeight:
-                                                          FontWeight.bold)),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Icon(
+                                                    Icons.call,
+                                                    color: Colors.white,
+                                                  ),
+                                                  Text('  ' + buttonLabels[1],
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.bold)),
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -476,7 +513,7 @@ class _HomeState extends State<Home> {
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width /
-                                                1.42,
+                                                1.40,
                                             child: ElevatedButton(
                                               style: ButtonStyle(
                                                   elevation:
@@ -484,15 +521,25 @@ class _HomeState extends State<Home> {
                                                           20),
                                                   backgroundColor:
                                                       MaterialStateProperty.all(
-                                                          Colors.greenAccent)),
+                                                          Colors.black)),
                                               onPressed: () =>
                                                   {alertme("button-three")},
-                                              child: Text(
-                                                buttonLabels[2],
-                                                style: TextStyle(
-                                                    color: Colors.teal[900],
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Icon(
+                                                    Icons.call,
+                                                    color: Colors.white,
+                                                  ),
+                                                  Text(
+                                                    '  ' + buttonLabels[2],
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                           ),

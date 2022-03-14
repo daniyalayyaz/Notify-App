@@ -59,6 +59,7 @@ flutter:
   assets:
     - assets/bee.mp4
     - assets/Demo.mp4
+    - assets/video-demo.mp4
     - assets/Images/profile-Icon-SVG.jpg
   #   - images/a_dot_ham.jpeg
 

@@ -44,26 +44,26 @@ class _TabsScreenState extends State<TabsScreen> {
       body: _pages[_selectedPageIndex]['Pages'] as Widget,
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,
-        backgroundColor: Color(0xffB788E5),
-        unselectedItemColor: Colors.white,
-        selectedItemColor: Color(0xff8d43d6),
+        backgroundColor: Colors.white,
+        unselectedItemColor: Colors.grey,
+        selectedItemColor: Colors.black,
         currentIndex: _selectedPageIndex,
         // type: BottomNavigationBarType.fixed,
         items: [
           BottomNavigationBarItem(
-            backgroundColor: Color(0xffB788E5),
+            backgroundColor: Colors.black,
             icon: Icon(Icons.home),
             label: 'Home',
           ),
           BottomNavigationBarItem(
             backgroundColor: Color(0xffB788E5),
-            icon: Icon(Icons.explore),
-            label: 'Explore',
+            icon: Icon(Icons.feed_rounded),
+            label: 'News & Feeds',
           ),
           BottomNavigationBarItem(
             backgroundColor: Color(0xffB788E5),
             icon: Icon(Icons.settings),
-            label: 'Account',
+            label: 'Settings',
           ),
         ],
       ),

@@ -123,13 +123,18 @@ class _HomeState extends State<Menu2> {
         ? Center(child: CircularProgressIndicator())
         : Scaffold(
             appBar: AppBar(
-              backgroundColor: Colors.teal,
-              title: FittedBox(fit: BoxFit.fitWidth, child: Text('Menu2')),
+              backgroundColor: Colors.white,
+              title: FittedBox(
+                  fit: BoxFit.fitWidth,
+                  child: Text(
+                    'News & Feeds',
+                    style: TextStyle(color: Colors.black),
+                  )),
               actions: <Widget>[
                 IconButton(
                   icon: Icon(
                     Icons.person,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                   onPressed: () {
                     Navigator.push(
@@ -143,7 +148,7 @@ class _HomeState extends State<Menu2> {
                 IconButton(
                   icon: Icon(
                     Icons.logout_rounded,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                   onPressed: () async {
                     var c = await SharedPreferences.getInstance();
@@ -177,29 +182,19 @@ class _HomeState extends State<Menu2> {
             body: LayoutBuilder(builder: (ctx, constraints) {
               return Center(
                 child: Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          colors: [
-                            const Color(0xFFB9F6CA),
-                            const Color(0xFFE0F2F1)
-                          ],
-                          begin: const FractionalOffset(0.0, 0.0),
-                          end: const FractionalOffset(1.0, 0.0),
-                          stops: [0.0, 1.0],
-                          tileMode: TileMode.clamp),
-                    ),
+                    color: Colors.white,
                     child: Padding(
                       padding: const EdgeInsets.all(14.0),
                       child: Column(
                         children: <Widget>[
                           Container(
-                            color: Colors.teal,
+                            color: Colors.grey[200],
                             height: 30,
                             child: Marquee(
                               text: 'Security Notify App',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.white),
+                                  color: Colors.black),
                               scrollAxis: Axis.horizontal,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               blankSpace: 20.0,

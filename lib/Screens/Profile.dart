@@ -15,8 +15,14 @@ class _UserProfileState extends State<UserProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.teal,
-        title: FittedBox(fit: BoxFit.fitWidth, child: Text('Profile')),
+        foregroundColor: Colors.black,
+        backgroundColor: Colors.white,
+        title: FittedBox(
+            fit: BoxFit.fitWidth,
+            child: Text(
+              'Profile',
+              style: TextStyle(color: Colors.black),
+            )),
       ),
       body: FutureBuilder(
           future: SharedPreferences.getInstance(),
@@ -45,7 +51,7 @@ class _UserProfileState extends State<UserProfile> {
                         width: double.infinity,
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
-                            colors: [Colors.teal, Colors.greenAccent],
+                            colors: [Colors.grey, Colors.white],
                           ),
                         ),
                         child: Column(children: [
@@ -63,7 +69,7 @@ class _UserProfileState extends State<UserProfile> {
                           ),
                           Text(userinfo["name"],
                               style: TextStyle(
-                                color: Colors.white,
+                                color: Colors.black,
                                 fontSize: 20.0,
                               )),
                           SizedBox(
@@ -72,7 +78,7 @@ class _UserProfileState extends State<UserProfile> {
                           Text(
                             userinfo["designation"],
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Colors.black,
                               fontSize: 15.0,
                             ),
                           )
