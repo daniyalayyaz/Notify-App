@@ -72,8 +72,8 @@ class _LoginScreenState extends State<LoginScreen> {
           SnackBar(
             content: Text(e.toString()),
             action: SnackBarAction(
-                label: 'OK', textColor: Colors.greenAccent, onPressed: () {}),
-            backgroundColor: Colors.teal,
+                label: 'OK', textColor: Colors.black, onPressed: () {}),
+            backgroundColor: Colors.grey[400],
           ),
         );
       });
@@ -110,7 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           MediaQuery.of(context).padding.top) *
                                       0.060,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.teal,
+                                  color: Colors.black,
                                 ),
                                 textAlign: TextAlign.center,
                               ),
@@ -133,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       vertical: 10.0, horizontal: 15.0),
                                   child: Icon(
                                     Icons.person_outline,
-                                    color: Colors.teal,
+                                    color: Colors.black,
                                   ),
                                 ),
                                 Container(
@@ -184,7 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       vertical: 10.0, horizontal: 15.0),
                                   child: Icon(
                                     Icons.lock_open,
-                                    color: Colors.teal,
+                                    color: Colors.black,
                                   ),
                                 ),
                                 Container(
@@ -226,7 +226,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               child: const Text(
                                 'Forgot Password?',
                                 style: TextStyle(
-                                    color: Colors.teal,
+                                    color: Colors.black54,
                                     fontWeight: FontWeight.bold),
                               ),
                             ),
@@ -256,14 +256,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                                               .top) *
                                               0.08),
                                       backgroundColor:
-                                          MaterialStateProperty.all(Colors
-                                              .greenAccent), // <-- Button color
+                                          MaterialStateProperty.all(
+                                              Colors.black), // <-- Button color
                                       overlayColor: MaterialStateProperty
                                           .resolveWith<Color?>((states) {
                                         if (states
                                             .contains(MaterialState.pressed))
-                                          return Colors.greenAccent[
-                                              100]; // <-- Splash color
+                                          return Colors
+                                              .grey[100]; // <-- Splash color
                                       }),
                                     ),
                                     child: FittedBox(
@@ -279,7 +279,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                               "Login",
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
-                                                  color: Colors.teal[800],
+                                                  color: Colors.white,
                                                   fontStyle: FontStyle.italic),
                                             ),
                                           ),
@@ -290,7 +290,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                               child: TextButton(
                                                 child: Icon(
                                                   Icons.arrow_forward,
-                                                  color: Colors.teal[800],
+                                                  color: Colors.white,
                                                 ),
                                                 onPressed: () => {
                                                   login()
@@ -309,49 +309,49 @@ class _LoginScreenState extends State<LoginScreen> {
                               ],
                             ),
                           ),
-                          Container(
-                            margin: const EdgeInsets.only(top: 5.0),
-                            padding:
-                                const EdgeInsets.only(left: 20.0, right: 20.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                        child: FittedBox(
-                                            child: Text(
-                                                "Don\'t have an account?"))),
-                                    Container(
-                                      child: TextButton(
-                                        style: TextButton.styleFrom(
-                                          textStyle:
-                                              const TextStyle(fontSize: 10),
-                                        ),
-                                        onPressed: () {
-                                          Navigator.push(
-                                              context,
-                                              PageTransition(
-                                                  duration: Duration(
-                                                      milliseconds: 700),
-                                                  type: PageTransitionType
-                                                      .rightToLeftWithFade,
-                                                  child: requestLoginPage()));
-                                        },
-                                        child: const Text(
-                                          'Request Login Credentials.',
-                                          style: TextStyle(
-                                              color: Colors.teal,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
+                          // Container(
+                          //   margin: const EdgeInsets.only(top: 5.0),
+                          //   padding:
+                          //       const EdgeInsets.only(left: 20.0, right: 20.0),
+                          //   child: Column(
+                          //     crossAxisAlignment: CrossAxisAlignment.center,
+                          //     children: [
+                          //       Row(
+                          //         mainAxisAlignment: MainAxisAlignment.center,
+                          //         children: [
+                          //           Container(
+                          //               child: FittedBox(
+                          //                   child: Text(
+                          //                       "Don\'t have an account?"))),
+                          //           Container(
+                          //             child: TextButton(
+                          //               style: TextButton.styleFrom(
+                          //                 textStyle:
+                          //                     const TextStyle(fontSize: 10),
+                          //               ),
+                          //               onPressed: () {
+                          //                 Navigator.push(
+                          //                     context,
+                          //                     PageTransition(
+                          //                         duration: Duration(
+                          //                             milliseconds: 700),
+                          //                         type: PageTransitionType
+                          //                             .rightToLeftWithFade,
+                          //                         child: requestLoginPage()));
+                          //               },
+                          //               child: const Text(
+                          //                 'Request Login Credentials.',
+                          //                 style: TextStyle(
+                          //                     color: Colors.teal,
+                          //                     fontWeight: FontWeight.bold),
+                          //               ),
+                          //             ),
+                          //           ),
+                          //         ],
+                          //       ),
+                          //     ],
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),

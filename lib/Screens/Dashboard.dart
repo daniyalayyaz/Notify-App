@@ -32,19 +32,18 @@ class _HomeState extends State<Home> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text('Are you sure?'),
+        title: Text(
+          'Confirmation',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         content: Text(
-          'Are you sure you want to send a Request?',
+          'Are you sure you want to send a request?',
         ),
         actions: <Widget>[
           ElevatedButton(
-            child: Text('No'),
-            onPressed: () {
-              Navigator.of(ctx).pop(false);
-            },
-          ),
-          ElevatedButton(
-            child: Text('Yes'),
+            child: Text('Yes', style: TextStyle(color: Colors.white)),
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.black)),
             onPressed: () async {
               final prefs = await SharedPreferences.getInstance();
               final userinfo =
@@ -65,15 +64,27 @@ class _HomeState extends State<Home> {
               });
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text("Your Request is sent"),
+                  content: Text(
+                    "Your Request is sent",
+                    style: TextStyle(color: Colors.black),
+                  ),
                   action: SnackBarAction(
-                      label: 'OK',
-                      textColor: Colors.greenAccent,
-                      onPressed: () {}),
-                  backgroundColor: Colors.teal,
+                      label: 'OK', textColor: Colors.black, onPressed: () {}),
+                  backgroundColor: Colors.grey[400],
                 ),
               );
               Navigator.of(ctx).pop(true);
+            },
+          ),
+          ElevatedButton(
+            child: Text(
+              'No',
+              style: TextStyle(color: Colors.white),
+            ),
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.black)),
+            onPressed: () {
+              Navigator.of(ctx).pop(false);
             },
           ),
         ],
@@ -150,6 +161,7 @@ class _HomeState extends State<Home> {
         ? Center(child: CircularProgressIndicator())
         : Scaffold(
             appBar: AppBar(
+              foregroundColor: Colors.black,
               backgroundColor: Colors.white,
               title: FittedBox(
                   fit: BoxFit.fitWidth,
@@ -315,14 +327,28 @@ class _HomeState extends State<Home> {
                                                     child: AspectRatio(
                                                       aspectRatio: _controller
                                                           .value.aspectRatio,
-                                                      child: Container(
-                                                          child: ClipRRect(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          20),
-                                                              child: VideoPlayer(
-                                                                  _controller))),
+                                                      child: GestureDetector(
+                                                        onTap: () {
+                                                          Navigator.push(
+                                                              context,
+                                                              PageTransition(
+                                                                  duration: Duration(
+                                                                      milliseconds:
+                                                                          700),
+                                                                  type: PageTransitionType
+                                                                      .rightToLeftWithFade,
+                                                                  child: VideoPlayer(
+                                                                      _controller)));
+                                                        },
+                                                        child: Container(
+                                                            child: ClipRRect(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            20),
+                                                                child: VideoPlayer(
+                                                                    _controller))),
+                                                      ),
                                                     ),
                                                   );
                                                 } else {
@@ -340,40 +366,85 @@ class _HomeState extends State<Home> {
                                     )),
                                   ),
 
-                                  Container(
-                                    margin: EdgeInsets.only(left: 8),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(25),
-                                      child: Image.network(
-                                        urls[1],
-                                        fit: BoxFit.fitHeight,
-                                        width: 100,
-                                        height: 250,
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          PageTransition(
+                                              duration:
+                                                  Duration(milliseconds: 700),
+                                              type: PageTransitionType
+                                                  .rightToLeftWithFade,
+                                              child: Image.network(
+                                                urls[0],
+                                                fit: BoxFit.fitHeight,
+                                              )));
+                                    },
+                                    child: Container(
+                                      margin: EdgeInsets.only(left: 8),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(25),
+                                        child: Image.network(
+                                          urls[0],
+                                          fit: BoxFit.fitHeight,
+                                          width: 100,
+                                          height: 250,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                  Container(
-                                    margin: EdgeInsets.only(left: 8),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(25),
-                                      child: Image.network(
-                                        urls[2],
-                                        fit: BoxFit.fitHeight,
-                                        width: 100,
-                                        height: 250,
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          PageTransition(
+                                              duration:
+                                                  Duration(milliseconds: 700),
+                                              type: PageTransitionType
+                                                  .rightToLeftWithFade,
+                                              child: Image.network(
+                                                urls[1],
+                                                fit: BoxFit.fitHeight,
+                                              )));
+                                    },
+                                    child: Container(
+                                      margin: EdgeInsets.only(left: 8),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(25),
+                                        child: Image.network(
+                                          urls[1],
+                                          fit: BoxFit.fitHeight,
+                                          width: 100,
+                                          height: 250,
+                                        ),
                                       ),
                                     ),
                                   ),
 
-                                  Container(
-                                    margin: EdgeInsets.only(left: 8),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(25),
-                                      child: Image.network(
-                                        urls[0],
-                                        width: 100,
-                                        fit: BoxFit.fitHeight,
-                                        height: 250,
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          PageTransition(
+                                              duration:
+                                                  Duration(milliseconds: 700),
+                                              type: PageTransitionType
+                                                  .rightToLeftWithFade,
+                                              child: Image.network(
+                                                urls[2],
+                                                fit: BoxFit.fitHeight,
+                                              )));
+                                    },
+                                    child: Container(
+                                      margin: EdgeInsets.only(left: 8),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(25),
+                                        child: Image.network(
+                                          urls[2],
+                                          width: 100,
+                                          fit: BoxFit.fitHeight,
+                                          height: 250,
+                                        ),
                                       ),
                                     ),
                                   ),
