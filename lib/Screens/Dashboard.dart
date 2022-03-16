@@ -62,6 +62,11 @@ class _HomeState extends State<Home> {
                 "owner": userinfo["owner"],
                 "email": userinfo["email"]
               });
+              FirebaseFirestore.instance.collection("UserButtonRequest").add({
+                "type": collect,
+                "uid": userinfo["uid"],
+                "pressedTime": FieldValue.serverTimestamp(),
+              });
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(

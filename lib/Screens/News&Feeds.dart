@@ -9,7 +9,7 @@ import 'package:video_player/video_player.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:page_transition/page_transition.dart';
 
-class Menu2 extends StatefulWidget {
+class Newsandfeeds extends StatefulWidget {
   static final routeName = "Menu2";
 
   static List<IconData> navigatorsIcon = [
@@ -20,7 +20,7 @@ class Menu2 extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
-class _HomeState extends State<Menu2> {
+class _HomeState extends State<Newsandfeeds> {
   var buttonLabels;
   List<String> urls = [];
   bool _isInit = true;

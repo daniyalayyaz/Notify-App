@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:notify_app/Screens/Dashboard.dart';
+import 'package:notify_app/Screens/History.dart';
 import 'package:notify_app/Screens/LoginPage.dart';
 import 'package:notify_app/Screens/Tab.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -86,6 +87,7 @@ class _MyAppState extends State<MyApp> {
           requestLoginPage.route: (ctx) => requestLoginPage(),
           Home.routeName: (ctx) => Home(),
           UserProfile.routename: (ctx) => UserProfile(),
+          ButtonsHistory.routename: (ctx) => ButtonsHistory(),
         });
   }
 }

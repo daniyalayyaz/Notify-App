@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:notify_app/Screens/Dashboard.dart';
-import 'package:notify_app/Screens/Menu2.dart';
+import 'package:notify_app/Screens/History.dart';
+import 'package:notify_app/Screens/News&Feeds.dart';
 import 'package:provider/provider.dart';
 
 class TabsScreen extends StatefulWidget {
@@ -19,12 +20,12 @@ class _TabsScreenState extends State<TabsScreen> {
         'title': 'Home',
       },
       {
-        'Pages': Menu2(),
-        'title': 'Explore',
+        'Pages': Newsandfeeds(),
+        'title': 'News & Feeds',
       },
       {
-        'Pages': Home(),
-        'title': 'Cart',
+        'Pages': ButtonsHistory(),
+        'title': 'History',
       },
     ];
     super.initState();
@@ -62,8 +63,8 @@ class _TabsScreenState extends State<TabsScreen> {
           ),
           BottomNavigationBarItem(
             backgroundColor: Color(0xffB788E5),
-            icon: Icon(Icons.settings),
-            label: 'Settings',
+            icon: Icon(Icons.history),
+            label: 'History',
           ),
         ],
       ),
