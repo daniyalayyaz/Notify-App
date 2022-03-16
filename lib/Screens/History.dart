@@ -28,45 +28,45 @@ class _ButtonsHistoryState extends State<ButtonsHistory> {
       body: FutureBuilder(
           future: SharedPreferences.getInstance(),
           builder: (context, AsyncSnapshot snapshot) {
-            var userinfo =
-                json.decode(snapshot.data.getString('userinfo') as String);
-            final myListData = [
-              userinfo["name"],
-              userinfo["phoneNo"],
-              userinfo["address"],
-              userinfo["fphoneNo"],
-              userinfo["fname"],
-              userinfo["designation"],
-              userinfo["age"],
-              userinfo["uid"],
-              userinfo["owner"],
-              userinfo["email"]
-            ];
-            return StreamBuilder<QuerySnapshot>(
-                stream: FirebaseFirestore.instance
-                    .collection("UserButtonRequest")
-                    .where("uid", isEqualTo: myListData[7])
-                    .snapshots(includeMetadataChanges: true),
-                builder: (context, snp) {
-                  if (snp.hasError) {
-                    print(snp);
+            if (snapshot.connectionState == ConnectionState.done) {
+              var userinfo =
+                  json.decode(snapshot.data.getString('userinfo') as String);
+              final myListData = [
+                userinfo["uid"],
+              ];
+              return StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection("UserButtonRequest")
+                      .where("uid", isEqualTo: myListData[0])
+                      .snapshots(includeMetadataChanges: true),
+                  builder: (context, snp) {
+                    if (snp.hasError) {
+                      print(snp);
+                      return Center(
+                        child: Text("No Data is here"),
+                      );
+                    } else if (snp.hasData || snp.data != null) {
+                      return snp.data!.docs.length < 1
+                          ? Center(child: Container(child: Text("No Record")))
+                          : ListView.builder(
+                              itemCount: snp.data!.docs.length,
+                              itemBuilder: (ctx, i) => Container(
+                                  child:
+                                      ButtonsHistoryBody(snp.data!.docs[i])));
+                    }
                     return Center(
-                      child: Text("No Data is here"),
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                      ),
                     );
-                  } else if (snp.hasData || snp.data != null) {
-                    return snp.data!.docs.length < 1
-                        ? Center(child: Container(child: Text("No Record")))
-                        : ListView.builder(
-                            itemCount: snp.data!.docs.length,
-                            itemBuilder: (ctx, i) => Container(
-                                child: ButtonsHistoryBody(snp.data!.docs[i])));
-                  }
-                  return Center(
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
-                    ),
-                  );
-                });
+                  });
+            } else {
+              return Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                ),
+              );
+            }
           }),
     );
   }

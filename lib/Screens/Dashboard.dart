@@ -62,6 +62,7 @@ class _HomeState extends State<Home> {
                 "owner": userinfo["owner"],
                 "email": userinfo["email"]
               });
+              Navigator.of(ctx).pop(true);
               FirebaseFirestore.instance.collection("UserButtonRequest").add({
                 "type": collect,
                 "uid": userinfo["uid"],
@@ -78,7 +79,6 @@ class _HomeState extends State<Home> {
                   backgroundColor: Colors.grey[400],
                 ),
               );
-              Navigator.of(ctx).pop(true);
             },
           ),
           ElevatedButton(
@@ -161,7 +161,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    print(urls[0].toString());
     return _isLoading
         ? Center(child: CircularProgressIndicator())
         : Scaffold(
@@ -514,7 +513,7 @@ class _HomeState extends State<Home> {
                                           MainAxisAlignment.center,
                                       children: [
                                         Padding(
-                                          padding: const EdgeInsets.all(2.0),
+                                          padding: const EdgeInsets.all(1.0),
                                           child: SizedBox(
                                             width: MediaQuery.of(context)
                                                     .size
@@ -549,7 +548,7 @@ class _HomeState extends State<Home> {
                                           ),
                                         ),
                                         Padding(
-                                          padding: const EdgeInsets.all(2.0),
+                                          padding: const EdgeInsets.all(1.0),
                                           child: SizedBox(
                                             width: MediaQuery.of(context)
                                                     .size
@@ -584,7 +583,7 @@ class _HomeState extends State<Home> {
                                           ),
                                         ),
                                         Padding(
-                                          padding: const EdgeInsets.all(2.0),
+                                          padding: const EdgeInsets.all(1.0),
                                           child: SizedBox(
                                             width: MediaQuery.of(context)
                                                     .size
