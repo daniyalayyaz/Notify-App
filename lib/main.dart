@@ -6,6 +6,7 @@ import 'package:notify_app/Screens/LoginPage.dart';
 import 'package:notify_app/Screens/Tab.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Screens/RequestLogin.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'Screens/Dashboard.dart';
 import 'Screens/Profile.dart';
 
@@ -27,6 +28,7 @@ class _MyAppState extends State<MyApp> {
   void initializeFlutterFire() async {
     try {
       await Firebase.initializeApp();
+
       setState(() {
         _initialized = true;
       });
@@ -72,6 +74,8 @@ class _MyAppState extends State<MyApp> {
         home: FutureBuilder(
             future: SharedPreferences.getInstance(),
             builder: (context, AsyncSnapshot snapshot) {
+              FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+              firebaseMessaging.subscribeToTopic('TopicToListen');
               if (snapshot.connectionState == ConnectionState.done) {
                 return snapshot.data.containsKey("token")
                     ? snapshot.data.getBool("token")
