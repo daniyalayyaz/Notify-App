@@ -116,7 +116,8 @@ class _HomeState extends State<Newsandfeeds> {
   final List<String> navigators = [
     "View History",
   ];
-
+  int _current = 0;
+  final CarouselController _carouselcontroller = CarouselController();
   @override
   Widget build(BuildContext context) {
     return _isLoading
@@ -181,76 +182,102 @@ class _HomeState extends State<Newsandfeeds> {
             // drawer: Drawner(navigators: navigators),
             body: LayoutBuilder(builder: (ctx, constraints) {
               return Center(
-                child: Container(
-                    color: Colors.white,
-                    child: Padding(
-                      padding: const EdgeInsets.all(14.0),
-                      child: Column(
-                        children: <Widget>[
-                          Container(
-                            color: Colors.grey[200],
-                            height: 30,
-                            child: Marquee(
-                              text: 'Security Notify App',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                              scrollAxis: Axis.horizontal,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              blankSpace: 20.0,
-                              velocity: 100.0,
-                              pauseAfterRound: Duration(milliseconds: 100),
-                              startPadding: 10.0,
-                              accelerationDuration: Duration(seconds: 1),
-                              accelerationCurve: Curves.linear,
-                              decelerationDuration: Duration(milliseconds: 500),
-                              decelerationCurve: Curves.easeOut,
-                            ),
-                          ),
-                          Row(
-                            children: [
-                              Flexible(
-                                flex: 1,
-                                fit: FlexFit.tight,
-                                child: CarouselSlider(
-                                  items: urls
-                                      .map((e) => Container(
-                                            margin: EdgeInsets.all(6.0),
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                              image: DecorationImage(
-                                                image:
-                                                    NetworkImage(e.toString()),
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                          ))
-                                      .toList(),
-                                  //Slider Container properties
-                                  options: CarouselOptions(
-                                    // height: 450.0,
-                                    enlargeCenterPage: true,
-                                    autoPlay: true,
-                                    aspectRatio: 30 / 46,
-                                    autoPlayCurve: Curves.fastOutSlowIn,
-                                    enableInfiniteScroll: true,
-                                    autoPlayAnimationDuration:
-                                        Duration(milliseconds: 800),
-                                    viewportFraction: 1,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ], //<Widget>[]
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  child: Container(
+                color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.all(14.0),
+                  child: Column(children: <Widget>[
+                    Container(
+                      color: Colors.grey[200],
+                      height: 30,
+                      child: Marquee(
+                        text: 'Security Notify App',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.black),
+                        scrollAxis: Axis.horizontal,
                         crossAxisAlignment: CrossAxisAlignment.center,
-                      ), //Column
-                    )
-                    //Padding
-                    ), //Container
-              );
+                        blankSpace: 20.0,
+                        velocity: 100.0,
+                        pauseAfterRound: Duration(milliseconds: 100),
+                        startPadding: 10.0,
+                        accelerationDuration: Duration(seconds: 1),
+                        accelerationCurve: Curves.linear,
+                        decelerationDuration: Duration(milliseconds: 500),
+                        decelerationCurve: Curves.easeOut,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Flexible(
+                          flex: 1,
+                          fit: FlexFit.tight,
+                          child: CarouselSlider(
+                            carouselController: _carouselcontroller,
+
+                            items: urls
+                                .map((e) => Container(
+                                      margin: EdgeInsets.all(6.0),
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                        image: DecorationImage(
+                                          image: NetworkImage(e.toString()),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ))
+                                .toList(),
+                            //Slider Container properties
+                            options: CarouselOptions(
+                                height:
+                                    MediaQuery.of(context).size.height * .68,
+                                enlargeCenterPage: true,
+                                autoPlay: true,
+                                aspectRatio: 30 / 46,
+                                autoPlayCurve: Curves.fastOutSlowIn,
+                                enableInfiniteScroll: true,
+                                autoPlayAnimationDuration:
+                                    Duration(milliseconds: 800),
+                                viewportFraction: 1,
+                                onPageChanged: (index, reason) {
+                                  setState(() {
+                                    _current = index;
+                                  });
+                                }),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: urls.asMap().entries.map((entry) {
+                        return GestureDetector(
+                          onTap: () =>
+                              _carouselcontroller.animateToPage(entry.key),
+                          child: Container(
+                            width: 12.0,
+                            height: 12.0,
+                            margin: EdgeInsets.symmetric(
+                                vertical: 8.0, horizontal: 4.0),
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: (Theme.of(context).brightness ==
+                                            Brightness.dark
+                                        ? Colors.white
+                                        : Colors.black)
+                                    .withOpacity(
+                                        _current == entry.key ? 0.9 : 0.4)),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ]),
+                  //<Widget>[]
+                ), //Column
+              )
+                  //Padding
+                  //Container
+                  );
             }) //Center
             ); //Scaffold
   }
