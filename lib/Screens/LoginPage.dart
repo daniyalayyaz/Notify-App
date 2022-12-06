@@ -62,9 +62,9 @@ class _LoginScreenState extends State<LoginScreen> {
             Navigator.push(
                 context,
                 PageTransition(
-                    duration: Duration(milliseconds: 100),
+                    duration: Duration(milliseconds: 300),
                     type: PageTransitionType.rightToLeftWithFade,
-                    child: Home()));
+                    child: Tab()));
           }
         });
       }).catchError((e) {
@@ -103,13 +103,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: Container(
                               padding: EdgeInsets.all(20),
                               child: Text(
-                                "WELCOME TO NOTIFY",
+                                "WELCOME TO INVOSEG",
                                 style: TextStyle(
-                                  fontStyle: FontStyle.italic,
                                   fontSize: (MediaQuery.of(context).size.width -
                                           MediaQuery.of(context).padding.top) *
-                                      0.060,
-                                  fontWeight: FontWeight.bold,
+                                      0.070,
+                                  fontWeight: FontWeight.w900,
                                   color: Colors.black,
                                 ),
                                 textAlign: TextAlign.center,
@@ -217,96 +216,50 @@ class _LoginScreenState extends State<LoginScreen> {
                               ],
                             ),
                           ),
-                          Container(
-                            child: TextButton(
-                              style: TextButton.styleFrom(
-                                textStyle: const TextStyle(fontSize: 10),
-                              ),
-                              onPressed: () {},
-                              child: const Text(
-                                'Forgot Password?',
-                                style: TextStyle(
-                                    color: Colors.black54,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Container(
-                                  child: ElevatedButton(
-                                    style: ButtonStyle(
+                          // Container(
+                          //   child: TextButton(
+                          //     style: TextButton.styleFrom(
+                          //       textStyle: const TextStyle(fontSize: 10),
+                          //     ),
+                          //     onPressed: () {},
+                          //     child: const Text(
+                          //       'Forgot Password?',
+                          //       style: TextStyle(
+                          //           color: Colors.black54,
+                          //           fontWeight: FontWeight.bold),
+                          //     ),
+                          //   ),
+                          // ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SizedBox(
+                              width: MediaQuery.of(context).size.width / 1.2,
+                              height: 50,
+                              child: Container(
+                                child: ElevatedButton(
+                                  child: Text('Sign in',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.white)),
+                                  onPressed: () {
+                                    login();
+                                  },
+                                  style: ButtonStyle(
                                       shape: MaterialStateProperty.all<
                                               RoundedRectangleBorder>(
                                           RoundedRectangleBorder(
                                         borderRadius:
-                                            BorderRadius.circular(30.0),
+                                            BorderRadius.circular(100),
                                       )),
-                                      padding: MaterialStateProperty.all(
-                                          EdgeInsets.symmetric(
-                                                  vertical: 1,
-                                                  horizontal:
-                                                      MediaQuery.of(context)
-                                                              .size
-                                                              .width -
-                                                          MediaQuery.of(context)
-                                                              .padding
-                                                              .top) *
-                                              0.08),
                                       backgroundColor:
                                           MaterialStateProperty.all(
-                                              Colors.black), // <-- Button color
-                                      overlayColor: MaterialStateProperty
-                                          .resolveWith<Color?>((states) {
-                                        if (states
-                                            .contains(MaterialState.pressed))
-                                          return Colors
-                                              .grey[100]; // <-- Splash color
-                                      }),
-                                    ),
-                                    child: FittedBox(
-                                      fit: BoxFit.fitWidth,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: <Widget>[
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 2.0),
-                                            child: Text(
-                                              "Login",
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontStyle: FontStyle.italic),
-                                            ),
-                                          ),
-                                          Transform.translate(
-                                            offset: Offset(15.0, 0.0),
-                                            child: Container(
-                                              // padding: const EdgeInsets.on(1.0),
-                                              child: TextButton(
-                                                child: Icon(
-                                                  Icons.arrow_forward,
-                                                  color: Colors.white,
-                                                ),
-                                                onPressed: () => {
-                                                  login()
-                                                  // Navigator.of(context)
-                                                  //     .pushNamed(Home.routeName)
-                                                },
-                                              ),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    onPressed: () => {login()},
-                                  ),
+                                              Colors.black),
+                                      padding: MaterialStateProperty.all(
+                                          EdgeInsets.symmetric(
+                                              vertical: 10, horizontal: 20))),
                                 ),
-                              ],
+                              ),
                             ),
                           ),
                           // Container(

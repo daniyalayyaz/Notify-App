@@ -16,14 +16,23 @@ class _ButtonsHistoryState extends State<ButtonsHistory> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        foregroundColor: Colors.black,
         backgroundColor: Colors.white,
-        title: FittedBox(
-            fit: BoxFit.fitWidth,
-            child: Text(
-              'History',
-              style: TextStyle(color: Colors.black),
-            )),
+        elevation: 0,
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Image(
+            image: AssetImage('assets/Images/Invoseg.jpg'),
+            height: 50,
+            width: 50,
+          ),
+        ),
+        title: Text(
+          'History',
+          style: TextStyle(
+              color: Color(0xff212121),
+              fontWeight: FontWeight.w700,
+              fontSize: 24),
+        ),
       ),
       body: FutureBuilder(
           future: SharedPreferences.getInstance(),
@@ -49,6 +58,7 @@ class _ButtonsHistoryState extends State<ButtonsHistory> {
                       return snp.data!.docs.length < 1
                           ? Center(child: Container(child: Text("No Record")))
                           : ListView.builder(
+                              physics: BouncingScrollPhysics(),
                               itemCount: snp.data!.docs.length,
                               itemBuilder: (ctx, i) => Container(
                                   child:
@@ -82,34 +92,50 @@ class ButtonsHistoryBody extends StatefulWidget {
 class _ButtonsHistoryBodyState extends State<ButtonsHistoryBody> {
   @override
   Widget build(BuildContext context) {
-    return Card(
-      //color: Colors.grey[300],
-      shape: RoundedRectangleBorder(
-        side: BorderSide(color: Colors.white, width: 2),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      elevation: 20,
-      margin: EdgeInsets.all(10),
-      child: Column(
-        children: <Widget>[
-          SizedBox(height: 10),
-          ListTile(
-            title: Text(
-              'BUTTON TYPE: ${widget.comp.data()['type']}'.toUpperCase(),
-              softWrap: true,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-            ),
-            subtitle: Text(
-              'BUTTON PRESSED ON: ${widget.comp.data()['pressedTime'].toDate()}',
-              softWrap: true,
-              style: TextStyle(
-                  color: Colors.grey,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 11),
-              textAlign: TextAlign.start,
-            ),
-          ),
-        ],
+    return Container(
+      color: Colors.white,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Material(
+          color: Colors.white,
+          shadowColor: Color(0xffBDBDBD),
+          elevation: 5,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12),
+              child: ListTile(
+                tileColor: Colors.white,
+                leading: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image(
+                        width: 50,
+                        height: 50,
+                        fit: BoxFit.cover,
+                        image: widget.comp.data()['type'] == 'button-one'
+                            ? AssetImage('assets/Images/Security.jpg')
+                            : widget.comp.data()['type'] == 'button-two'
+                                ? AssetImage('assets/Images/Doctor.jpg')
+                                : AssetImage('assets/Images/Grocery.avif'))),
+                title: Text(
+                  widget.comp.data()['type'] == 'button-one'
+                      ? 'SECURITY'
+                      : widget.comp.data()['type'] == 'button-two'
+                          ? 'EMERGENCY'
+                          : 'GROCERY',
+                  style: TextStyle(
+                      color: Color(0xff212121), fontWeight: FontWeight.w700),
+                ),
+                subtitle: Text(
+                  widget.comp.data()['pressedTime'].toDate().toString(),
+                  style: TextStyle(
+                      color: Color(0xff757575),
+                      fontWeight: FontWeight.w500,
+                      fontSize: 12),
+                ),
+              )),
+        ),
       ),
     );
   }

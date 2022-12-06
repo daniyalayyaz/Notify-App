@@ -12,8 +12,8 @@
 
 
    <application
-        android:label="policesfs"
-        android:icon="@mipmap/ic_launcher">
+        android:label="INVOSEG"
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

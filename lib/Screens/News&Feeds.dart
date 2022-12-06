@@ -125,12 +125,22 @@ class _HomeState extends State<Newsandfeeds> {
         : Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.white,
-              title: FittedBox(
-                  fit: BoxFit.fitWidth,
-                  child: Text(
-                    'News & Feeds',
-                    style: TextStyle(color: Colors.black),
-                  )),
+              elevation: 0,
+              leading: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image(
+                  image: AssetImage('assets/Images/Invoseg.jpg'),
+                  height: 50,
+                  width: 50,
+                ),
+              ),
+              title: Text(
+                'News & Feeds',
+                style: TextStyle(
+                    color: Color(0xff212121),
+                    fontWeight: FontWeight.w700,
+                    fontSize: 24),
+              ),
               actions: <Widget>[
                 IconButton(
                   icon: Icon(
