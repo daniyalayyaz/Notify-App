@@ -56,7 +56,7 @@ class _UserProfileState extends State<UserProfile> {
                         ),
                         child: Column(children: [
                           SizedBox(
-                            height: 70.0,
+                            height: 30.0,
                           ),
                           CircleAvatar(
                             radius: 65.0,
@@ -81,7 +81,28 @@ class _UserProfileState extends State<UserProfile> {
                               color: Colors.black,
                               fontSize: 15.0,
                             ),
-                          )
+                          ),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          ElevatedButton.icon(
+                              label: Text(
+                                'Add Family Members',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              onPressed: () {},
+                              style: ButtonStyle(
+                                  shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(100),
+                                  )),
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Colors.black),
+                                  padding: MaterialStateProperty.all(
+                                      EdgeInsets.symmetric(
+                                          vertical: 10, horizontal: 20))),
+                              icon: Icon(Icons.add, color: Colors.white))
                         ]),
                       ),
                     ),
@@ -99,6 +120,7 @@ class _UserProfileState extends State<UserProfile> {
                                     child: Padding(
                                       padding: EdgeInsets.all(10.0),
                                       child: SingleChildScrollView(
+                                        physics: BouncingScrollPhysics(),
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,

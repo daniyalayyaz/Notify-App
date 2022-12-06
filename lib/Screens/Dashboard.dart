@@ -220,12 +220,12 @@ class _HomeState extends State<Home> {
                 //         MaterialStateProperty.all(Colors.greenAccent),
                 //   ),
                 //   child: FittedBox(
-                //       fit: BoxFit.cover,
+                //       fit: BoxFit.cover,        style: TextStyle(
+                //             color: Colors.teal[900],
+
                 //       child: Text(
                 //         'Logout',
-                //         style: TextStyle(
-                //             color: Colors.teal[900],
-                //             fontWeight: FontWeight.bold),
+                //              //             fontWeight: FontWeight.bold),
                 //       )),
                 // ),
               ],
@@ -318,61 +318,53 @@ class _HomeState extends State<Home> {
                               ),
                             ),
                             width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height / 7,
                             child: Card(
                               elevation: 0,
                               color: Colors.transparent,
                               child: Padding(
                                 padding: const EdgeInsets.all(10.0),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(12.0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            Icons.important_devices,
+                                child: FittedBox(
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Stack(
+                                        children: <Widget>[
+                                          Text(
+                                            'WE\'RE INVOSEG!',
+                                            style: TextStyle(
+                                              fontSize: 24,
+                                              fontWeight: FontWeight.bold,
+                                              foreground: Paint()
+                                                ..style = PaintingStyle.stroke
+                                                ..strokeWidth = 1.5
+                                                ..color = Color(0xff3366b4),
+                                            ),
+                                          ),
+                                          Text(
+                                            'WE\'RE INVOSEG!',
+                                            style: TextStyle(
+                                              fontSize: 24,
+                                              fontWeight: FontWeight.bold,
+                                              color: Color(0xff449cf4),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          'Your Pocket Security, Grocer & Healthcare Partners',
+                                          style: TextStyle(
                                             color: Colors.white,
                                           ),
-                                          Text(
-                                            ' Status',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white),
-                                          ),
-                                        ],
+                                        ),
                                       ),
-                                    ),
-                                    FittedBox(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            'Attention!',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.red,
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Text(
-                                              'Press Button only when it is important.',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
