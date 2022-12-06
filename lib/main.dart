@@ -1,5 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:notify_app/Screens/AddFamilyMembers.dart';
+import 'package:notify_app/Screens/Complaint.dart';
 import 'package:notify_app/Screens/Dashboard.dart';
 import 'package:notify_app/Screens/E-Reciept.dart';
 import 'package:notify_app/Screens/History.dart';
@@ -74,6 +77,7 @@ class _MyAppState extends State<MyApp> {
     }
     return MaterialApp(
         debugShowCheckedModeBanner: false,
+        builder: EasyLoading.init(),
         title: 'Notify-App',
         theme: ThemeData(fontFamily: 'Urbanist'),
         home: FutureBuilder(
@@ -98,7 +102,9 @@ class _MyAppState extends State<MyApp> {
           UserProfile.routename: (ctx) => UserProfile(),
           ButtonsHistory.routename: (ctx) => ButtonsHistory(),
           ViewEReciept.routename: (ctx) => ViewEReciept(),
-          Prescription.routename: (ctx) => Prescription()
+          Prescription.routename: (ctx) => Prescription(),
+          FamilyMembers.routename: (ctx) => FamilyMembers(),
+          Complainform.routename: (ctx) => Complainform()
         });
   }
 }

@@ -22,16 +22,16 @@ class _TabsScreenState extends State<TabsScreen> {
         'title': 'Home',
       },
       {
-        'Pages': Newsandfeeds(),
-        'title': 'News & Feeds',
-      },
-      {
         'Pages': Grocery(),
         'title': 'Grocery',
       },
       {
         'Pages': Emergency(),
         'title': 'Emergency',
+      },
+      {
+        'Pages': Newsandfeeds(),
+        'title': 'News & Feeds',
       },
       {
         'Pages': ButtonsHistory(),
@@ -59,15 +59,11 @@ class _TabsScreenState extends State<TabsScreen> {
         unselectedItemColor: Colors.grey,
         selectedItemColor: Colors.black,
         currentIndex: _selectedPageIndex,
-        // type: BottomNavigationBarType.fixed,
+        type: BottomNavigationBarType.fixed,
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_rounded),
             label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.feed_rounded),
-            label: 'News & Feeds',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.shopping_basket_rounded),
@@ -76,6 +72,10 @@ class _TabsScreenState extends State<TabsScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.medical_services_rounded),
             label: 'Emergency',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.feed_rounded),
+            label: 'Feeds',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.history),

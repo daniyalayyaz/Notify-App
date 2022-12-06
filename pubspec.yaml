@@ -43,6 +43,7 @@ dependencies:
   geolocator: 7.6.2
   page_transition: "^2.0.5"
   badges: ^2.0.3
+  flutter_easyloading:
 dependency_overrides:
   firebase_messaging_platform_interface: 3.1.6
 

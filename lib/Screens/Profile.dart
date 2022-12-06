@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:notify_app/Screens/AddFamilyMembers.dart';
+import 'package:notify_app/Screens/Complaint.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserProfile extends StatefulWidget {
@@ -23,6 +25,13 @@ class _UserProfileState extends State<UserProfile> {
               'Profile',
               style: TextStyle(color: Colors.black),
             )),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed(Complainform.routename);
+              },
+              icon: Icon(Icons.report))
+        ],
       ),
       body: FutureBuilder(
           future: SharedPreferences.getInstance(),
@@ -90,7 +99,10 @@ class _UserProfileState extends State<UserProfile> {
                                 'Add Family Members',
                                 style: TextStyle(color: Colors.white),
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.of(context)
+                                    .pushNamed(FamilyMembers.routename);
+                              },
                               style: ButtonStyle(
                                   shape: MaterialStateProperty.all<
                                           RoundedRectangleBorder>(

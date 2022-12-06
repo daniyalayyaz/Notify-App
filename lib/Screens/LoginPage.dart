@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:notify_app/Screens/Dashboard.dart';
 import 'package:notify_app/Screens/RequestLogin.dart';
+import 'package:notify_app/Screens/Tab.dart';
 import 'package:provider/provider.dart';
 import 'package:page_transition/page_transition.dart';
 import 'dart:convert';
@@ -21,6 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void login() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
+      EasyLoading.show(status: 'Authenticating...');
       FirebaseAuth.instance
           .signInWithEmailAndPassword(
               email: logins['user'].toString().trim(),
@@ -57,14 +60,16 @@ class _LoginScreenState extends State<LoginScreen> {
               "email": info["email"]
             });
             await prefs.setString('userinfo', userinfo);
+            await prefs.setString('email', info["email"]);
+            await prefs.setString('pass', logins['pass'].toString().trim());
             await prefs.setBool("token", true);
-
+            EasyLoading.dismiss();
             Navigator.push(
                 context,
                 PageTransition(
-                    duration: Duration(milliseconds: 300),
+                    duration: Duration(milliseconds: 100),
                     type: PageTransitionType.rightToLeftWithFade,
-                    child: Tab()));
+                    child: TabsScreen()));
           }
         });
       }).catchError((e) {
@@ -105,10 +110,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               child: Text(
                                 "WELCOME TO INVOSEG",
                                 style: TextStyle(
+                                  fontStyle: FontStyle.italic,
                                   fontSize: (MediaQuery.of(context).size.width -
                                           MediaQuery.of(context).padding.top) *
-                                      0.070,
-                                  fontWeight: FontWeight.w900,
+                                      0.060,
+                                  fontWeight: FontWeight.bold,
                                   color: Colors.black,
                                 ),
                                 textAlign: TextAlign.center,
@@ -216,28 +222,15 @@ class _LoginScreenState extends State<LoginScreen> {
                               ],
                             ),
                           ),
-                          // Container(
-                          //   child: TextButton(
-                          //     style: TextButton.styleFrom(
-                          //       textStyle: const TextStyle(fontSize: 10),
-                          //     ),
-                          //     onPressed: () {},
-                          //     child: const Text(
-                          //       'Forgot Password?',
-                          //       style: TextStyle(
-                          //           color: Colors.black54,
-                          //           fontWeight: FontWeight.bold),
-                          //     ),
-                          //   ),
-                          // ),
+
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: SizedBox(
-                              width: MediaQuery.of(context).size.width / 1.2,
+                              width: MediaQuery.of(context).size.width / 1.1,
                               height: 50,
                               child: Container(
                                 child: ElevatedButton(
-                                  child: Text('Sign in',
+                                  child: Text('Login',
                                       style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w600,

@@ -334,7 +334,7 @@ class _HomeState extends State<Home> {
                                       Stack(
                                         children: <Widget>[
                                           Text(
-                                            'WE\'RE INVOSEG!',
+                                            'SECURE & LUXURY LIVING',
                                             style: TextStyle(
                                               fontSize: 24,
                                               fontWeight: FontWeight.bold,
@@ -345,7 +345,7 @@ class _HomeState extends State<Home> {
                                             ),
                                           ),
                                           Text(
-                                            'WE\'RE INVOSEG!',
+                                            'SECURE & LUXURY LIVING',
                                             style: TextStyle(
                                               fontSize: 24,
                                               fontWeight: FontWeight.bold,
