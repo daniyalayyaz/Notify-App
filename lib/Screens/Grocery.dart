@@ -20,12 +20,12 @@ class Grocery extends StatelessWidget {
         'Address': '667-B, Canal View Lahore',
         'Status': 'Processing'
       },
-      {
-        'DateTime': 'Dec 08, 2024 - 15:00 PM',
-        'Name': 'Muhammad Amir',
-        'Address': '667-B, Canal View Lahore',
-        'Status': 'Delivered'
-      }
+      // {
+      //   'DateTime': 'Dec 08, 2024 - 15:00 PM',
+      //   'Name': 'Muhammad Amir',
+      //   'Address': '667-B, Canal View Lahore',
+      //   'Status': 'Delivered'
+      // }
     ];
     return Scaffold(
       appBar: AppBar(

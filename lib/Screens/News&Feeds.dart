@@ -216,47 +216,39 @@ class _HomeState extends State<Newsandfeeds> {
                         decelerationCurve: Curves.easeOut,
                       ),
                     ),
-                    Row(
-                      children: [
-                        Flexible(
-                          flex: 1,
-                          fit: FlexFit.tight,
-                          child: CarouselSlider(
-                            carouselController: _carouselcontroller,
+                    Expanded(
+                      child: CarouselSlider(
+                        carouselController: _carouselcontroller,
 
-                            items: urls
-                                .map((e) => Container(
-                                      margin: EdgeInsets.all(6.0),
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                        image: DecorationImage(
-                                          image: NetworkImage(e.toString()),
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ))
-                                .toList(),
-                            //Slider Container properties
-                            options: CarouselOptions(
-                                height:
-                                    MediaQuery.of(context).size.height * .68,
-                                enlargeCenterPage: true,
-                                autoPlay: true,
-                                aspectRatio: 30 / 46,
-                                autoPlayCurve: Curves.fastOutSlowIn,
-                                enableInfiniteScroll: true,
-                                autoPlayAnimationDuration:
-                                    Duration(milliseconds: 800),
-                                viewportFraction: 1,
-                                onPageChanged: (index, reason) {
-                                  setState(() {
-                                    _current = index;
-                                  });
-                                }),
-                          ),
-                        ),
-                      ],
+                        items: urls
+                            .map((e) => Container(
+                                  margin: EdgeInsets.all(6.0),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    image: DecorationImage(
+                                      image: NetworkImage(e.toString()),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ))
+                            .toList(),
+                        //Slider Container properties
+                        options: CarouselOptions(
+                            height: MediaQuery.of(context).size.height * .68,
+                            enlargeCenterPage: true,
+                            autoPlay: true,
+                            aspectRatio: 30 / 46,
+                            autoPlayCurve: Curves.fastOutSlowIn,
+                            enableInfiniteScroll: true,
+                            autoPlayAnimationDuration:
+                                Duration(milliseconds: 800),
+                            viewportFraction: 1,
+                            onPageChanged: (index, reason) {
+                              setState(() {
+                                _current = index;
+                              });
+                            }),
+                      ),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,

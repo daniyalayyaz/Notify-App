@@ -214,7 +214,7 @@ class Prescription extends StatelessWidget {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 8.0, vertical: 8),
                                   child: Text(
-                                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+                                    'Ipratropium (1+1 - Morning & Evening after meal)\nTheophylline Tablets (1+1+1 - Morning, Afternoon & Evening after meal)',
                                     style: TextStyle(
                                         color: Color(0xff212121),
                                         fontWeight: FontWeight.w500),
@@ -235,7 +235,7 @@ class Prescription extends StatelessWidget {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 8.0, vertical: 8),
                                   child: Text(
-                                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+                                    'No test needed at all',
                                     style: TextStyle(
                                         color: Color(0xff212121),
                                         fontWeight: FontWeight.w500),
@@ -256,7 +256,7 @@ class Prescription extends StatelessWidget {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 8.0, vertical: 8),
                                   child: Text(
-                                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+                                    'Stay home and rest. Many viruses, including influenza, come on hard and fast\nHydrate and humidify. Drink more water, warm tea, or broth to increase your fluids',
                                     style: TextStyle(
                                         color: Color(0xff212121),
                                         fontWeight: FontWeight.w500),

@@ -7,14 +7,24 @@ import 'package:notify_app/Screens/Prescription.dart';
 import 'package:notify_app/Screens/Profile.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+final Uri _url = Uri.parse('https://meet.google.com/gdj-uuof-qvm');
 
 class Emergency extends StatelessWidget {
   const Emergency({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Future<void> _launchUrl() async {
+      String url = "https://meet.google.com/gdj-uuof-qvm";
+      if (await canLaunchUrl(Uri.parse(url))) {
+        await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+      }
+    }
+
     List EmergencyOrders = [
-      {'DateTime': 'Dec 22, 2024 - 10:00 AM', 'Status': 'Link Generated'},
+      // {'DateTime': 'Dec 22, 2024 - 10:00 AM', 'Status': 'Link Generated'},
       {'DateTime': 'Dec 08, 2024 - 15:00 PM', 'Status': 'Meeting Held'}
     ];
     return Scaffold(
@@ -175,28 +185,29 @@ class Emergency extends StatelessWidget {
                                                       .width /
                                                   2.7,
                                           child: ElevatedButton(
-                                            child: Text('Copy Link',
+                                            child: Text('Start Meeting',
                                                 style: TextStyle(
                                                     fontSize: 12,
                                                     fontWeight: FontWeight.w600,
                                                     color: Colors.black)),
                                             onPressed: () {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(
-                                                SnackBar(
-                                                  content: Text(
-                                                    "Meeting Link Copied Successfully! ",
-                                                    style: TextStyle(
-                                                        color: Colors.black),
-                                                  ),
-                                                  action: SnackBarAction(
-                                                      label: 'OK',
-                                                      textColor: Colors.black,
-                                                      onPressed: () {}),
-                                                  backgroundColor:
-                                                      Colors.grey[400],
-                                                ),
-                                              );
+                                              _launchUrl();
+                                              // ScaffoldMessenger.of(context)
+                                              //     .showSnackBar(
+                                              //   SnackBar(
+                                              //     content: Text(
+                                              //       "Meeting Link Copied Successfully! ",
+                                              //       style: TextStyle(
+                                              //           color: Colors.black),
+                                              //     ),
+                                              //     action: SnackBarAction(
+                                              //         label: 'OK',
+                                              //         textColor: Colors.black,
+                                              //         onPressed: () {}),
+                                              //     backgroundColor:
+                                              //         Colors.grey[400],
+                                              //   ),
+                                              // );
                                             },
                                             style: ButtonStyle(
                                                 shape: MaterialStateProperty.all<
