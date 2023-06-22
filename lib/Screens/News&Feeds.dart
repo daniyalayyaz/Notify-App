@@ -127,11 +127,11 @@ class _HomeState extends State<Newsandfeeds> {
               backgroundColor: Colors.white,
               elevation: 0,
               leading: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.only(left: 8.0),
                 child: Image(
-                  image: AssetImage('assets/Images/Invoseg.jpg'),
-                  height: 50,
-                  width: 50,
+                  image: AssetImage('assets/Images/Lake-City-Logo.png'),
+                  height: 60,
+                  width: 60,
                 ),
               ),
               title: Text(
