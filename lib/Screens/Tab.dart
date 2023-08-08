@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:notify_app/Screens/Dashboard.dart';
+import 'package:notify_app/Screens/Emergency.dart';
+import 'package:notify_app/Screens/Grocery.dart';
 import 'package:notify_app/Screens/History.dart';
 import 'package:notify_app/Screens/News&Feeds.dart';
 import 'package:provider/provider.dart';
@@ -18,6 +20,14 @@ class _TabsScreenState extends State<TabsScreen> {
       {
         'Pages': Home(),
         'title': 'Home',
+      },
+      {
+        'Pages': Grocery(),
+        'title': 'Grocery',
+      },
+      {
+        'Pages': Emergency(),
+        'title': 'Emergency',
       },
       {
         'Pages': Newsandfeeds(),
@@ -49,20 +59,25 @@ class _TabsScreenState extends State<TabsScreen> {
         unselectedItemColor: Colors.grey,
         selectedItemColor: Colors.black,
         currentIndex: _selectedPageIndex,
-        // type: BottomNavigationBarType.fixed,
+        type: BottomNavigationBarType.fixed,
         items: [
           BottomNavigationBarItem(
-            backgroundColor: Colors.black,
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.home_rounded),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            backgroundColor: Color(0xffB788E5),
-            icon: Icon(Icons.feed_rounded),
-            label: 'News & Feeds',
+            icon: Icon(Icons.shopping_basket_rounded),
+            label: 'Grocery',
           ),
           BottomNavigationBarItem(
-            backgroundColor: Color(0xffB788E5),
+            icon: Icon(Icons.medical_services_rounded),
+            label: 'Emergency',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.feed_rounded),
+            label: 'Feeds',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.history),
             label: 'History',
           ),

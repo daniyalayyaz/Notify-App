@@ -1,8 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:notify_app/Screens/AddFamilyMembers.dart';
+import 'package:notify_app/Screens/Complaint.dart';
 import 'package:notify_app/Screens/Dashboard.dart';
+import 'package:notify_app/Screens/E-Reciept.dart';
 import 'package:notify_app/Screens/History.dart';
 import 'package:notify_app/Screens/LoginPage.dart';
+import 'package:notify_app/Screens/Prescription.dart';
 import 'package:notify_app/Screens/Tab.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Screens/RequestLogin.dart';
@@ -52,6 +57,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     if (_error) {
       return MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: Scaffold(
           body: AlertDialog(
             content: Text('Something went wrong. Please restart the app.'),
@@ -61,6 +67,7 @@ class _MyAppState extends State<MyApp> {
     }
     if (!_initialized) {
       return MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: Scaffold(
           body: Center(
             child: CircularProgressIndicator(),
@@ -69,8 +76,10 @@ class _MyAppState extends State<MyApp> {
       );
     }
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        builder: EasyLoading.init(),
         title: 'Notify-App',
-        theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'Poppins'),
+        theme: ThemeData(fontFamily: 'Urbanist'),
         home: FutureBuilder(
             future: SharedPreferences.getInstance(),
             builder: (context, AsyncSnapshot snapshot) {
@@ -92,6 +101,10 @@ class _MyAppState extends State<MyApp> {
           Home.routeName: (ctx) => Home(),
           UserProfile.routename: (ctx) => UserProfile(),
           ButtonsHistory.routename: (ctx) => ButtonsHistory(),
+          ViewEReciept.routename: (ctx) => ViewEReciept(),
+          Prescription.routename: (ctx) => Prescription(),
+          FamilyMembers.routename: (ctx) => FamilyMembers(),
+          Complainform.routename: (ctx) => Complainform()
         });
   }
 }

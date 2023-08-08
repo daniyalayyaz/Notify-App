@@ -125,12 +125,22 @@ class _HomeState extends State<Newsandfeeds> {
         : Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.white,
-              title: FittedBox(
-                  fit: BoxFit.fitWidth,
-                  child: Text(
-                    'News & Feeds',
-                    style: TextStyle(color: Colors.black),
-                  )),
+              elevation: 0,
+              leading: Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Image(
+                  image: AssetImage('assets/Images/Lake-City-Logo.png'),
+                  height: 60,
+                  width: 60,
+                ),
+              ),
+              title: Text(
+                'News & Feeds',
+                style: TextStyle(
+                    color: Color(0xff212121),
+                    fontWeight: FontWeight.w700,
+                    fontSize: 24),
+              ),
               actions: <Widget>[
                 IconButton(
                   icon: Icon(
@@ -206,47 +216,39 @@ class _HomeState extends State<Newsandfeeds> {
                         decelerationCurve: Curves.easeOut,
                       ),
                     ),
-                    Row(
-                      children: [
-                        Flexible(
-                          flex: 1,
-                          fit: FlexFit.tight,
-                          child: CarouselSlider(
-                            carouselController: _carouselcontroller,
+                    Expanded(
+                      child: CarouselSlider(
+                        carouselController: _carouselcontroller,
 
-                            items: urls
-                                .map((e) => Container(
-                                      margin: EdgeInsets.all(6.0),
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                        image: DecorationImage(
-                                          image: NetworkImage(e.toString()),
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ))
-                                .toList(),
-                            //Slider Container properties
-                            options: CarouselOptions(
-                                height:
-                                    MediaQuery.of(context).size.height * .68,
-                                enlargeCenterPage: true,
-                                autoPlay: true,
-                                aspectRatio: 30 / 46,
-                                autoPlayCurve: Curves.fastOutSlowIn,
-                                enableInfiniteScroll: true,
-                                autoPlayAnimationDuration:
-                                    Duration(milliseconds: 800),
-                                viewportFraction: 1,
-                                onPageChanged: (index, reason) {
-                                  setState(() {
-                                    _current = index;
-                                  });
-                                }),
-                          ),
-                        ),
-                      ],
+                        items: urls
+                            .map((e) => Container(
+                                  margin: EdgeInsets.all(6.0),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    image: DecorationImage(
+                                      image: NetworkImage(e.toString()),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ))
+                            .toList(),
+                        //Slider Container properties
+                        options: CarouselOptions(
+                            height: MediaQuery.of(context).size.height * .68,
+                            enlargeCenterPage: true,
+                            autoPlay: true,
+                            aspectRatio: 30 / 46,
+                            autoPlayCurve: Curves.fastOutSlowIn,
+                            enableInfiniteScroll: true,
+                            autoPlayAnimationDuration:
+                                Duration(milliseconds: 800),
+                            viewportFraction: 1,
+                            onPageChanged: (index, reason) {
+                              setState(() {
+                                _current = index;
+                              });
+                            }),
+                      ),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
